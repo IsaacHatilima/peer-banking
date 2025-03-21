@@ -19,7 +19,8 @@ return [
     'central_domains' => [
         '127.0.0.1',
         'localhost',
-        'multi-tenancy.test',
+        'peer-banking.test',
+        'peer-banking-1-master-kgco0f.laravel.cloud',
     ],
 
     /**
