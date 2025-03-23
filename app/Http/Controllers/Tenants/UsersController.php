@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Tenants;
 
-use App\Actions\Auth\V1\V1\V1\V1\RegisterAction;
-use App\Actions\TenantAction;
 use App\Actions\TenantUser\CreateTenantUserAction;
 use App\Actions\TenantUser\DeleteTenantUserAction;
 use App\Actions\TenantUser\ListTenantUserAction;
 use App\Actions\TenantUser\PatchTenantUserAction;
 use App\Actions\TenantUser\UpdateTenantUserAction;
-use App\Actions\TenantUserAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\CreateTenantUsersRequest;
@@ -22,19 +19,6 @@ use Inertia\Inertia;
 class UsersController extends Controller
 {
     use AuthorizesRequests;
-
-    private TenantAction $tenantAction;
-
-    private RegisterAction $registerAction;
-
-    private TenantUserAction $tenantUserAction;
-
-    public function __construct(TenantUserAction $tenantUserAction)
-    {
-        //        $this->tenantAction = $tenantAction;
-        //        $this->registerAction = $registerAction;
-        $this->tenantUserAction = $tenantUserAction;
-    }
 
     public function index(Request $request, ListTenantUserAction $listTenantUserAction)
     {

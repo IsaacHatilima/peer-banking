@@ -93,7 +93,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'id' => 'string',
             'data' => 'array',
             'created_at' => 'datetime',
-            // 'name' => 'encrypted',
         ];
     }
 }
