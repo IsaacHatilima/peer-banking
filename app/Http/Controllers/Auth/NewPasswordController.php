@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\V1\SetPasswordAction;
+use App\Actions\Auth\V1\PasswordManager\CheckTokenAction;
+use App\Actions\Auth\V1\PasswordManager\SetPasswordAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SetPasswordRequest;
 use Illuminate\Http\RedirectResponse;
@@ -14,14 +15,12 @@ use Inertia\Response;
 
 class NewPasswordController extends Controller
 {
-    public function __construct(private readonly SetPasswordAction $setPasswordAction) {}
-
     /**
      * Display the password reset view.
      */
-    public function create(Request $request): Response
+    public function create(Request $request, CheckTokenAction $checkTokenAction): Response
     {
-        $tokenValidity = $this->setPasswordAction->check_token($request->email);
+        $tokenValidity = $checkTokenAction($request->email);
 
         return Inertia::render($tokenValidity ? 'Auth/ResetPassword' : 'Errors/PasswordReset', [
             'email' => $request->email,
@@ -34,9 +33,9 @@ class NewPasswordController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(SetPasswordRequest $request): RedirectResponse
+    public function store(SetPasswordRequest $request, SetPasswordAction $setPasswordAction): RedirectResponse
     {
-        $status = $this->setPasswordAction->set_password($request);
+        $status = $setPasswordAction($request);
 
         if ($status == Password::PASSWORD_RESET) {
             return redirect()->route('login')->with('status', __($status));

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\V1\SetPasswordAction;
+use App\Actions\Auth\V1\PasswordManager\ChangePasswordAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
@@ -13,8 +13,6 @@ use Inertia\Response;
 
 class SecurityController extends Controller
 {
-    public function __construct(private readonly SetPasswordAction $setPasswordAction) {}
-
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Security', [
@@ -31,9 +29,9 @@ class SecurityController extends Controller
         return redirect()->back();
     }
 
-    public function update(ChangePasswordRequest $request): RedirectResponse
+    public function update(ChangePasswordRequest $request, ChangePasswordAction $changePassword): RedirectResponse
     {
-        $this->setPasswordAction->change_password($request);
+        $changePassword($request);
 
         return back();
     }
