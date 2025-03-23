@@ -18,6 +18,7 @@ class UpdateTenantAction
             'contact_last_name' => ucwords($request->contact_last_name),
             'contact_email' => strtolower($request->contact_email),
             'contact_phone' => $request->contact_phone,
+            'timezone' => $request->timezone,
             'updated_by' => auth()->user()->id,
         ]);
 

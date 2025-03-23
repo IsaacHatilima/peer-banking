@@ -1,11 +1,12 @@
 import { User } from '@/types/user';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Button, Modal, Select, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { FormEventHandler } from 'react';
 
 function EditUser({ user }: { user: User }) {
+    const roles: Array<string> = usePage().props.tenantRoles as Array<string>;
     const [openCreateTenantModal, createTenantModalManager] =
         useDisclosure(false);
     const { data, setData, errors, put, reset } = useForm({
@@ -113,10 +114,12 @@ function EditUser({ user }: { user: User }) {
                                 error={errors.role}
                                 value={data.role}
                                 withAsterisk
-                                data={[
-                                    { label: 'Admin', value: 'admin' },
-                                    { label: 'User', value: 'user' },
-                                ]}
+                                data={roles.map((role) => ({
+                                    value: role,
+                                    label:
+                                        role.charAt(0).toUpperCase() +
+                                        role.slice(1),
+                                }))}
                                 onChange={(_value, option) => {
                                     setData('role', option.value);
                                 }}

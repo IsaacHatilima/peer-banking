@@ -136,6 +136,7 @@ function Users() {
                         <Table.Tr>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     className="font-medium"
                                     id="first_name"
                                     name="first_name"
@@ -148,6 +149,7 @@ function Users() {
                             </Table.Th>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     className="font-medium"
                                     id="last_name"
                                     name="last_name"
@@ -160,6 +162,7 @@ function Users() {
                             </Table.Th>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     className="font-medium"
                                     id="email"
                                     name="email"
@@ -172,6 +175,7 @@ function Users() {
                             </Table.Th>
                             <Table.Th>
                                 <Input
+                                    size="xs"
                                     id="role"
                                     name="role"
                                     component="select"
@@ -187,6 +191,7 @@ function Users() {
                             </Table.Th>
                             <Table.Th>
                                 <Input
+                                    size="xs"
                                     id="verified"
                                     name="verified"
                                     component="select"
@@ -202,6 +207,7 @@ function Users() {
                             </Table.Th>
                             <Table.Th>
                                 <Input
+                                    size="xs"
                                     id="active"
                                     name="active"
                                     component="select"

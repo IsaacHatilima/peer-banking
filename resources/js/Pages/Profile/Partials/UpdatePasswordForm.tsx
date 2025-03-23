@@ -1,5 +1,5 @@
 import { useForm, usePage } from '@inertiajs/react';
-import { Button, PasswordInput } from '@mantine/core';
+import { Button, Card, PasswordInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { FormEventHandler } from 'react';
@@ -49,7 +49,7 @@ export default function UpdatePasswordForm() {
     };
 
     return (
-        <section>
+        <Card shadow="sm" padding="lg" radius="md" withBorder={false}>
             <header>
                 <h2 className="text-lg font-medium">Update Password</h2>
 
@@ -135,6 +135,6 @@ export default function UpdatePasswordForm() {
                     </Button>
                 </div>
             </form>
-        </section>
+        </Card>
     );
 }

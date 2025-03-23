@@ -1,11 +1,14 @@
 import { Tenant } from '@/types/tenant';
-import { router, useForm } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { Button, Modal, PasswordInput, Select, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { FormEvent, FormEventHandler } from 'react';
 
 function TenantData({ tenant }: { tenant: Tenant }) {
+    const timezones: Array<string> = usePage().props.timezones as Array<string>;
+    const tenantStatus: Array<string> = usePage().props
+        .tenantStatus as Array<string>;
     const [loading, { open, close }] = useDisclosure();
     const [openState, modalManager] = useDisclosure(false);
     const {
@@ -31,6 +34,7 @@ function TenantData({ tenant }: { tenant: Tenant }) {
         contact_email: tenant.contact_email,
         contact_phone: tenant.contact_phone,
         current_password: '',
+        timezone: tenant.timezone,
     });
 
     const handleSubmit: FormEventHandler = (e: FormEvent<Element>): void => {
@@ -264,12 +268,32 @@ function TenantData({ tenant }: { tenant: Tenant }) {
                         label="Status"
                         error={errors.status}
                         value={data.status}
-                        data={[
-                            { value: 'active', label: 'Active' },
-                            { value: 'in-active', label: 'In-Active' },
-                        ]}
+                        data={tenantStatus.map((status) => ({
+                            value: status,
+                            label: status
+                                .split('_')
+                                .map(
+                                    (word) =>
+                                        word.charAt(0).toUpperCase() +
+                                        word.slice(1),
+                                )
+                                .join(' '),
+                        }))}
                         onChange={(_value, option) => {
                             setData('status', option.value);
+                        }}
+                    />
+                    <Select
+                        mt="md"
+                        label="Timezone"
+                        error={errors.timezone}
+                        value={data.timezone}
+                        data={timezones.map((timezone) => ({
+                            value: timezone,
+                            label: timezone,
+                        }))}
+                        onChange={(_value, option) => {
+                            setData('timezone', option.value);
                         }}
                     />
                 </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TimeZone;
 use App\Rules\StringRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TenantRequest extends FormRequest
 {
@@ -16,6 +18,7 @@ class TenantRequest extends FormRequest
             StringRule::messages('country', true),
             StringRule::messages('contact_first_name', true),
             StringRule::messages('contact_last_name', true),
+
             [
                 'contact_email.required' => 'Contact E-Mail is required.',
                 'contact_email.email' => 'Invalid Contact E-Mail.',
@@ -41,6 +44,9 @@ class TenantRequest extends FormRequest
                 'domain.min' => 'Domain must be at least 3 characters.',
                 'domain.max' => 'Domain may not be greater than 10 characters.',
                 'domain.unique' => 'Domain has already been taken.',
+
+                'timezone.required' => 'Timezone is required.',
+                'timezone.in' => 'The selected timezone is invalid. Please choose a valid timezone.',
             ]
         );
     }
@@ -50,6 +56,7 @@ class TenantRequest extends FormRequest
 
         return array_merge(
             [
+                'timezone' => ['required', Rule::in(Timezone::getValues())],
                 'name' => ['required', 'min:3', 'max:50', 'unique:tenants,name'],
                 'zip' => ['required', 'numeric', 'digits_between:3,10'],
                 'contact_phone' => ['required', 'regex:/^(?:\+?\d{1,4}[\s\-]?)?(\(?\d{2,5}\)?[\s\-]?)?\d{7,15}$/', 'min:7', 'max:50'],

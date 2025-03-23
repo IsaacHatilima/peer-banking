@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\TenantStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,14 +25,16 @@ class CreateTenantsTable extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('state');
-            $table->string('zip');
+            $table->string('zip')->nullable();
             $table->string('country');
             $table->string('contact_first_name');
             $table->string('contact_last_name');
             $table->string('contact_email');
             $table->string('contact_phone');
-            $table->enum('status', ['active', 'in-active'])->default('active');
+            $table->string('status')->default(TenantStatus::ACTIVE->value);
+            $table->string('timezone');
             $table->timestamps();
+            $table->softDeletes();
             $table->json('data')->nullable();
         });
     }

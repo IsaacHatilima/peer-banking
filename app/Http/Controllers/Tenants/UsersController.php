@@ -7,6 +7,7 @@ use App\Actions\TenantUser\DeleteTenantUserAction;
 use App\Actions\TenantUser\ListTenantUserAction;
 use App\Actions\TenantUser\PatchTenantUserAction;
 use App\Actions\TenantUser\UpdateTenantUserAction;
+use App\Enums\TenantRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\CreateTenantUsersRequest;
@@ -25,6 +26,7 @@ class UsersController extends Controller
         $this->authorize('viewAny', [User::class, tenant()]);
 
         return Inertia::render('Tenant/TenantPages/Users', [
+            'tenantRoles' => TenantRole::getValues(),
             'users' => $listTenantUserAction(tenant(), $request),
             'filters' => $request->only(['first_name', 'last_name', 'email', 'role', 'verified', 'active']),
         ]);

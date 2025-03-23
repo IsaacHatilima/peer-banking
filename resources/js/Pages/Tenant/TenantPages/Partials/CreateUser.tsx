@@ -1,17 +1,18 @@
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { Button, Modal, Select, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { FormEventHandler } from 'react';
 
 function CreateUser() {
+    const roles: Array<string> = usePage().props.tenantRoles as Array<string>;
     const [openCreateTenantModal, createTenantModalManager] =
         useDisclosure(false);
     const { data, setData, errors, post, reset } = useForm({
         email: '',
         first_name: '',
         last_name: '',
-        role: '',
+        role: roles[0],
     });
 
     const handleSubmit: FormEventHandler = (e) => {
@@ -112,11 +113,12 @@ function CreateUser() {
                                 error={errors.role}
                                 value={data.role}
                                 withAsterisk
-                                data={[
-                                    { label: 'Select Role', value: '' },
-                                    { label: 'Admin', value: 'admin' },
-                                    { label: 'User', value: 'user' },
-                                ]}
+                                data={roles.map((role) => ({
+                                    value: role,
+                                    label:
+                                        role.charAt(0).toUpperCase() +
+                                        role.slice(1),
+                                }))}
                                 onChange={(_value, option) => {
                                     setData('role', option.value);
                                 }}

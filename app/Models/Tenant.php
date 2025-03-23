@@ -39,6 +39,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'contact_last_name',
             'tenant_number',
             'slug',
+            'timezone',
             'created_by',
             'updated_by',
         ];
@@ -59,7 +60,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public function getCreatedAtAttribute($value): string
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->setTimezone($this->timezone)->format('Y-m-d H:i:s');
     }
 
     public function getUpdatedAtAttribute($value): string

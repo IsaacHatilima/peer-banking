@@ -39,16 +39,15 @@ export default function Login({
 
     const handleFortifyAuth: FormEventHandler = (e) => {
         e.preventDefault();
-        console.log('fortifyAuth');
         open();
-        /*post('/login', {
+        post('/login', {
             onFinish: () => {
                 reset('password');
             },
             onError: () => {
                 close();
             },
-        });*/
+        });
     };
 
     const handleCustomAuth: FormEventHandler = (e) => {
@@ -190,14 +189,6 @@ export default function Login({
                         <span className="ml-2">Continue with Google</span>
                     </Button>
                 )}
-            </div>
-            <div className="mt-2 flex items-center justify-end">
-                <Link
-                    href={route('register')}
-                    className="mt-3 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Don't have an account? Register here
-                </Link>
             </div>
         </GuestLayout>
     );

@@ -1,10 +1,11 @@
-import { useForm } from '@inertiajs/react';
-import { Button, Modal, TextInput } from '@mantine/core';
+import { useForm, usePage } from '@inertiajs/react';
+import { Button, Modal, Select, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { FormEventHandler } from 'react';
 
 function CreateTenant() {
+    const timezones: Array<string> = usePage().props.timezones as Array<string>;
     const [openCreateTenantModal, createTenantModalManager] =
         useDisclosure(false);
     const { data, setData, errors, post, reset } = useForm({
@@ -22,6 +23,7 @@ function CreateTenant() {
         contact_email: '',
         contact_phone: '',
         current_password: '',
+        timezone: timezones[0],
         domain: '',
     });
 
@@ -266,6 +268,20 @@ function CreateTenant() {
                             />
                         </div>
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                            <Select
+                                mt="md"
+                                label="Timezone"
+                                error={errors.timezone}
+                                value={data.timezone}
+                                data={timezones.map((timezone) => ({
+                                    value: timezone,
+                                    label: timezone,
+                                }))}
+                                onChange={(_value, option) => {
+                                    setData('timezone', option.value);
+                                }}
+                            />
+
                             <TextInput
                                 className="w-full"
                                 id="domain"

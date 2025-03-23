@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\TenantRole;
+use App\Enums\TimeZone;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\User;
@@ -25,6 +27,7 @@ class TenantFactory extends Factory
             'contact_phone' => '+49'.$this->faker->unique()->numerify('###########'),
             'contact_first_name' => $this->faker->firstName(),
             'contact_last_name' => $this->faker->lastName(),
+            'timezone' => $this->faker->randomElement(Timezone::class),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
@@ -42,7 +45,7 @@ class TenantFactory extends Factory
 
                     User::factory()->create([
                         'tenant_id' => $tenant->id,
-                        'role' => $this->faker->randomElement(['admin', 'user']),
+                        'role' => $this->faker->randomElement(TenantRole::class),
                     ]);
                 }
             });

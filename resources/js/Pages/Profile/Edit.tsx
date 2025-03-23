@@ -9,24 +9,16 @@ export default function Edit({
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
+        <AuthenticatedLayout>
             <Head title="Profile" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <Card shadow="sm" padding="lg" radius="md" withBorder>
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                        />
-                    </Card>
-                </div>
+            <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                <Card shadow="sm" padding="lg" radius="md" withBorder>
+                    <UpdateProfileInformationForm
+                        mustVerifyEmail={mustVerifyEmail}
+                        status={status}
+                    />
+                </Card>
             </div>
         </AuthenticatedLayout>
     );

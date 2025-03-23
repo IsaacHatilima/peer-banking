@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TenantRole;
 use App\Rules\ExistingEmailRule;
 use App\Rules\StringRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTenantUserRequest extends FormRequest
 {
@@ -27,6 +29,9 @@ class UpdateTenantUserRequest extends FormRequest
         $user = $this->route('user');
 
         return array_merge(
+            [
+                'role' => ['required', Rule::in(TenantRole::getValues())],
+            ],
             StringRule::rules('first_name', true),
             StringRule::rules('last_name', true),
             ExistingEmailRule::rules($user->id),
@@ -36,6 +41,10 @@ class UpdateTenantUserRequest extends FormRequest
     public function messages(): array
     {
         return array_merge(
+            [
+                'role.required' => 'Role is required.',
+                'role.in' => 'Invalid role selected.',
+            ],
             StringRule::messages('first_name', true),
             StringRule::messages('last_name', true),
             ExistingEmailRule::messages(),

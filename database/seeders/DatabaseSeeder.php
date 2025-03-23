@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         // Central database user
         $user = User::factory()->create([
-            'email' => 'admin@mail.com',
+            'email' => 'dev@isaachatilima.com',
+            'email_verified_at' => now(),
         ]);
 
         $tenantCount = Tenant::count();
