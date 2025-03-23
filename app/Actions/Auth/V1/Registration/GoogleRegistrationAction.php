@@ -2,16 +2,16 @@
 
 namespace App\Actions\Auth\V1\Registration;
 
-use App\Actions\Profile\ProfileManagerAction;
+use App\Actions\Profile\V1\CreateProfileAction;
 use App\Models\User;
 
 class GoogleRegistrationAction
 {
-    protected ProfileManagerAction $profileManagerAction;
+    protected CreateProfileAction $createProfileAction;
 
-    public function __construct(ProfileManagerAction $profileManagerAction)
+    public function __construct(CreateProfileAction $createProfileAction)
     {
-        $this->profileManagerAction = $profileManagerAction;
+        $this->createProfileAction = $createProfileAction;
     }
 
     public function __invoke($request)
@@ -21,7 +21,7 @@ class GoogleRegistrationAction
             'email_verified_at' => now(),
         ]);
 
-        $this->profileManagerAction->create_profile($request, $user);
+        ($this->createProfileAction)($request, $user);
 
         return $user;
     }

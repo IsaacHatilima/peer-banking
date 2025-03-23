@@ -1,29 +1,10 @@
 <?php
 
-namespace App\Actions\Profile;
+namespace App\Actions\Profile\V1;
 
-use App\Models\Profile;
-
-class ProfileManagerAction
+class UpdateProfileAction
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    public function create_profile($request, $user)
-    {
-        return Profile::create([
-            'user_id' => $user->id,
-            'first_name' => ucwords($request->first_name),
-            'last_name' => ucwords($request->last_name),
-        ]);
-    }
-
-    public function update_profile($request): void
+    public function __invoke($request): void
     {
         $profile = auth()->user()->profile;
 

@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Actions\Profile\ProfileManagerAction;
+use App\Actions\Profile\V1\CreateProfileAction;
 use App\Models\User;
 use App\Notifications\UserPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
@@ -60,7 +61,7 @@ class TenantUserAction
         });
     }
 
-    public function create_user($request)
+    public function create_user($request, CreateProfileAction $createProfileAction)
     {
         $password = $this->generateStrongPassword();
 
@@ -71,7 +72,7 @@ class TenantUserAction
             'role' => strtolower($request->role),
         ]);
 
-        $this->profileManager->create_profile($request, $user);
+        $createProfileAction($request, $user);
 
         $user->notify(new UserPasswordNotification($user, $password, tenant()));
         $user->notify(new VerifyEmailNotification($user));

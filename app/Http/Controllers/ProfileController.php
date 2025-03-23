@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Auth\V1\DeleteAccountAction;
-use App\Actions\Profile\ProfileManagerAction;
+use App\Actions\Profile\V1\UpdateProfileAction;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,7 +16,6 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
     public function __construct(
-        private readonly ProfileManagerAction $profileManagerAction,
         private readonly DeleteAccountAction $deleteAccountAction
     ) {}
 
@@ -34,9 +33,9 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request)
+    public function update(ProfileUpdateRequest $request, UpdateProfileAction $updateProfileAction)
     {
-        $this->profileManagerAction->update_profile($request);
+        $updateProfileAction($request);
 
         return Redirect::route('profile.edit');
     }
