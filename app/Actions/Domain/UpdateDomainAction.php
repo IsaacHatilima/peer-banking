@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Domain;
 
-class DomainAction
+class UpdateDomainAction
 {
     /**
      * Create a new class instance.
@@ -12,7 +12,7 @@ class DomainAction
         //
     }
 
-    public function update_domain($domain, $request): void
+    public function __invoke($domain, $request): void
     {
         $domain->update(['domain' => $request->domain]);
     }
