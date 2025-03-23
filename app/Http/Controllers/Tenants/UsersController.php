@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Tenants;
 
-use App\Actions\Auth\RegisterAction;
+use App\Actions\Auth\V1\V1\V1\V1\RegisterAction;
 use App\Actions\TenantAction;
 use App\Actions\TenantUserAction;
 use App\Http\Controllers\Controller;

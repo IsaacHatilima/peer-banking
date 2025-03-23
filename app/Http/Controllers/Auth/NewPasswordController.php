@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\SetPasswordAction;
+use App\Actions\Auth\V1\SetPasswordAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SetPasswordRequest;
 use Illuminate\Http\RedirectResponse;

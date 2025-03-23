@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\RegisterAction;
+use App\Actions\Auth\V1\Registration\ManualRegistrationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
@@ -12,16 +12,14 @@ use Inertia\Response;
 
 class RegisteredUserController extends Controller
 {
-    public function __construct(private readonly RegisterAction $registerAction) {}
-
     /**
      * Handle an incoming registration request.
      *
      * @throws ValidationException
      */
-    public function store(RegisterRequest $request)
+    public function store(RegisterRequest $request, ManualRegistrationAction $registerAction)
     {
-        $user = $this->registerAction->register($request);
+        $user = $registerAction($request);
 
         Auth::login($user);
 

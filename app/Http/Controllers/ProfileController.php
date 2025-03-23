@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Auth\DeleteAccountAction;
+use App\Actions\Auth\V1\DeleteAccountAction;
 use App\Actions\Profile\ProfileManagerAction;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\ProfileUpdateRequest;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\RegisterAction;
+use App\Actions\Auth\V1\Registration\GoogleRegistrationAction;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,14 +11,12 @@ use Laravel\Socialite\Two\GoogleProvider;
 
 class GoogleAuthController extends Controller
 {
-    public function __construct(private readonly RegisterAction $registerAction) {}
-
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(GoogleRegistrationAction $registerAction)
     {
         /** @var GoogleProvider $driver */
         $driver = Socialite::driver('google');
@@ -38,7 +36,7 @@ class GoogleAuthController extends Controller
                 'last_name' => $googleUser->user['family_name'],
             ];
 
-            $user = $this->registerAction->googleRegister((object) $data);
+            $user = $registerAction((object) $data);
         }
 
         Auth::login($user);

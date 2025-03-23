@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\Auth\RegisterAction;
+use App\Actions\Auth\V1\V1\V1\V1\RegisterAction;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 

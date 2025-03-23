@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Auth;
+namespace App\Actions\Auth\V1;
 
 use App\Jobs\SendPasswordResetLink;
 

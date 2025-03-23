@@ -20,7 +20,7 @@ return [
         '127.0.0.1',
         'localhost',
         'peer-banking.test',
-        'peer-banking-1-master-kgco0f.laravel.cloud',
+        // 'peer-banking-1-master-kgco0f.laravel.cloud',
     ],
 
     /**
