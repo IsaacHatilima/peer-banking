@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Tenants;
 
 use App\Actions\Auth\V1\V1\V1\V1\RegisterAction;
 use App\Actions\TenantAction;
+use App\Actions\TenantUser\CreateTenantUserAction;
+use App\Actions\TenantUser\DeleteTenantUserAction;
+use App\Actions\TenantUser\ListTenantUserAction;
+use App\Actions\TenantUser\PatchTenantUserAction;
+use App\Actions\TenantUser\UpdateTenantUserAction;
 use App\Actions\TenantUserAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
@@ -24,52 +29,54 @@ class UsersController extends Controller
 
     private TenantUserAction $tenantUserAction;
 
-    public function __construct(TenantAction $tenantAction, RegisterAction $registerAction, TenantUserAction $tenantUserAction)
+    public function __construct(TenantUserAction $tenantUserAction)
     {
-        $this->tenantAction = $tenantAction;
-        $this->registerAction = $registerAction;
+        //        $this->tenantAction = $tenantAction;
+        //        $this->registerAction = $registerAction;
         $this->tenantUserAction = $tenantUserAction;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, ListTenantUserAction $listTenantUserAction)
     {
         $this->authorize('viewAny', [User::class, tenant()]);
 
         return Inertia::render('Tenant/TenantPages/Users', [
-            'users' => $this->tenantUserAction->get_tenant_users(tenant(), $request),
+            'users' => $listTenantUserAction(tenant(), $request),
             'filters' => $request->only(['first_name', 'last_name', 'email', 'role', 'verified', 'active']),
         ]);
     }
 
-    public function store(CreateTenantUsersRequest $request)
+    public function store(CreateTenantUsersRequest $request, CreateTenantUserAction $createTenantUserAction)
     {
         $this->authorize('create', [User::class, tenant()]);
 
-        $this->tenantUserAction->create_user($request);
+        $createTenantUserAction($request);
 
         return redirect()->back();
     }
 
-    public function update(UpdateTenantUserRequest $request, User $user)
+    public function update(UpdateTenantUserRequest $request, User $user, UpdateTenantUserAction $updateTenantUserAction)
     {
         $this->authorize('update', [User::class, tenant()]);
-        $this->tenantUserAction->update_profile($request, $user);
+        $updateTenantUserAction($request, $user);
 
         return redirect()->back();
     }
 
-    public function destroy(CurrentPasswordRequest $request, User $user)
+    public function destroy(CurrentPasswordRequest $request, User $user, DeleteTenantUserAction $deleteTenantUserAction)
     {
         $this->authorize('delete', [User::class, tenant()]);
-        $this->tenantUserAction->delete_user($user);
+
+        $deleteTenantUserAction($user);
 
         return redirect()->back();
     }
 
-    public function toggle_status(CurrentPasswordRequest $request, User $user)
+    public function patch(CurrentPasswordRequest $request, User $user, PatchTenantUserAction $patchTenantUserAction)
     {
         $this->authorize('delete', [User::class, tenant()]);
-        $this->tenantUserAction->toggle_user_status($user);
+
+        $patchTenantUserAction($user);
 
         return redirect()->back();
     }
