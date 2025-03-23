@@ -1,14 +1,17 @@
-/* eslint-disable prettier/prettier */
 import { createInertiaApp } from '@inertiajs/react';
-import { localStorageColorSchemeManager, MantineProvider } from '@mantine/core';
+import {
+    createTheme,
+    localStorageColorSchemeManager,
+    MantineProvider,
+    rem,
+} from '@mantine/core';
 
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
 import '../css/app.css';
 import './bootstrap';
 
@@ -16,6 +19,12 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 const colorSchemeManager = localStorageColorSchemeManager({
     key: 'mantine-color-scheme-value',
+});
+
+const theme = createTheme({
+    fontSizes: {
+        sm: rem(13),
+    },
 });
 
 createInertiaApp({
@@ -27,7 +36,10 @@ createInertiaApp({
         ),
     setup({ el, App, props }) {
         const RootComponent = (
-            <MantineProvider colorSchemeManager={colorSchemeManager}>
+            <MantineProvider
+                colorSchemeManager={colorSchemeManager}
+                theme={theme}
+            >
                 <Notifications position="top-right" limit={5} />
                 <App {...props} />
             </MantineProvider>
@@ -42,4 +54,4 @@ createInertiaApp({
     progress: {
         color: '#4B5563',
     },
-});
+}).then(() => {});

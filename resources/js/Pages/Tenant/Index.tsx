@@ -85,11 +85,11 @@ function Index() {
             <Table.Td>
                 {tenant.contact_first_name} {tenant.contact_last_name}
             </Table.Td>
+            <Table.Td>{tenant.created_at}</Table.Td>
             <Table.Td>
                 {tenant.created_by.profile.first_name}{' '}
                 {tenant.created_by.profile.last_name}
             </Table.Td>
-            <Table.Td>{tenant.created_at}</Table.Td>
         </Table.Tr>
     ));
 
@@ -110,12 +110,13 @@ function Index() {
                             <Table.Th>Subdomain</Table.Th>
                             <Table.Th>Status</Table.Th>
                             <Table.Th>Contact</Table.Th>
-                            <Table.Th>Created By</Table.Th>
                             <Table.Th>Created</Table.Th>
+                            <Table.Th>Created By</Table.Th>
                         </Table.Tr>
                         <Table.Tr>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     id="tenant_number"
                                     name="tenant_number"
                                     placeholder="Tenant Number"
@@ -127,6 +128,7 @@ function Index() {
                             </Table.Th>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     id="name"
                                     name="name"
                                     placeholder="Tenant Name"
@@ -138,6 +140,7 @@ function Index() {
                             </Table.Th>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     id="domain"
                                     name="domain"
                                     placeholder="Subdomain"
@@ -149,6 +152,7 @@ function Index() {
                             </Table.Th>
                             <Table.Th>
                                 <Input
+                                    size="xs"
                                     id="status"
                                     name="status"
                                     component="select"
@@ -164,6 +168,7 @@ function Index() {
                             </Table.Th>
                             <Table.Th>
                                 <TextInput
+                                    size="xs"
                                     id="contact_name"
                                     name="contact_name"
                                     placeholder="Contact Name"
@@ -173,9 +178,9 @@ function Index() {
                                     }
                                 />
                             </Table.Th>
-                            <Table.Th></Table.Th>
                             <Table.Th>
                                 <Input
+                                    size="xs"
                                     id="sorting"
                                     name="sorting"
                                     component="select"
@@ -188,6 +193,7 @@ function Index() {
                                     <option value="desc">Descending</option>
                                 </Input>
                             </Table.Th>
+                            <Table.Th></Table.Th>
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>{rows}</Table.Tbody>

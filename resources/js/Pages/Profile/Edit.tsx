@@ -2,7 +2,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 import { Card } from '@mantine/core';
-import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
 export default function Edit({
@@ -21,25 +20,11 @@ export default function Edit({
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <Card
-                        shadow="sm"
-                        padding="lg"
-                        radius="md"
-                        withBorder={false}
-                    >
+                    <Card shadow="sm" padding="lg" radius="md" withBorder>
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
                         />
-                    </Card>
-
-                    <Card
-                        shadow="sm"
-                        padding="lg"
-                        radius="md"
-                        withBorder={false}
-                    >
-                        <DeleteUserForm />
                     </Card>
                 </div>
             </div>
