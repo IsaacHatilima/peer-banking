@@ -1,8 +1,8 @@
 import TablePagination from '@/Components/TablePagination';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import CreateUser from '@/Pages/Tenant/TenantPages/Partials/CreateUser';
-import EditUser from '@/Pages/Tenant/TenantPages/Partials/EditUser';
-import ToggleUserState from '@/Pages/Tenant/TenantPages/Partials/ToggleUserState';
+import CreateUser from '@/Pages/TenantPages/Partials/CreateUser';
+import EditUser from '@/Pages/TenantPages/Partials/EditUser';
+import ToggleUserState from '@/Pages/TenantPages/Partials/ToggleUserState';
 import { PaginatedUsers, TenantUserFilter, User } from '@/types/user';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Badge, Card, Input, Table, TextInput } from '@mantine/core';
@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { FaUserTie } from 'react-icons/fa';
 import { FaUserLarge } from 'react-icons/fa6';
 
-function Users() {
+export default function Users() {
     const tenantUsers = usePage().props.users as PaginatedUsers;
     const filters: TenantUserFilter = usePage().props
         .filters as TenantUserFilter;
@@ -25,8 +25,18 @@ function Users() {
     });
 
     const rows = tenantUsers?.data.map((user: User) => (
-        <Table.Tr key={user.id}>
-            <Table.Td>{user.profile.first_name}</Table.Td>
+        <Table.Tr key={user.id} className={user.deleted_at ? 'bg-red-50' : ''}>
+            <Table.Td>
+                {user.profile.first_name}
+                {user.deleted_at ? '  ' : ''}
+                <span className="text-red-500">
+                    {user.deleted_at && (
+                        <Badge color="red" variant="filled" size="xs">
+                            Deleted
+                        </Badge>
+                    )}
+                </span>
+            </Table.Td>
             <Table.Td>{user.profile.last_name}</Table.Td>
             <Table.Td>{user.email}</Table.Td>
             <Table.Td>
@@ -106,7 +116,7 @@ function Users() {
 
     useEffect(() => {
         handleSearch();
-    }, [data]);
+    }, [data, handleSearch]);
 
     return (
         <AuthenticatedLayout>
@@ -231,5 +241,3 @@ function Users() {
         </AuthenticatedLayout>
     );
 }
-
-export default Users;

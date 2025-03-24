@@ -68,6 +68,7 @@ export default function UpdatePasswordForm() {
                         error={errors.current_password}
                         autoComplete="current_password"
                         mt="md"
+                        autoFocus
                         withAsterisk
                         label="Current Password"
                         placeholder="Current Password"

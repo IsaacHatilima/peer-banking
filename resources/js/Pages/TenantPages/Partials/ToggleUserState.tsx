@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { Button, Modal, PasswordInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { FormEvent, FormEventHandler, useRef } from 'react';
+import React, { FormEventHandler, useEffect, useRef } from 'react';
 
 function ToggleUserState({ user }: { user: User }) {
     const [openCreateTenantModal, createTenantModalManager] =
@@ -15,16 +15,18 @@ function ToggleUserState({ user }: { user: User }) {
         setData,
         reset,
         delete: destroy,
+        put,
+        patch,
         errors,
     } = useForm({
         current_password: '',
     });
 
     const handleToggleState: FormEventHandler = (
-        e: FormEvent<Element>,
+        e: React.MouseEvent<HTMLButtonElement>,
     ): void => {
         e.preventDefault();
-        destroy(route('users.toggle', user.id), {
+        put(route('users.toggle', user.id), {
             preserveScroll: true,
             onSuccess: () => {
                 notifications.show({
@@ -41,7 +43,9 @@ function ToggleUserState({ user }: { user: User }) {
         });
     };
 
-    const handleDelete: FormEventHandler = (e: FormEvent<Element>): void => {
+    const handleDelete: FormEventHandler = (
+        e: React.MouseEvent<HTMLButtonElement>,
+    ): void => {
         e.preventDefault();
         destroy(route('users.destroy', user.id), {
             preserveScroll: true,
@@ -60,19 +64,40 @@ function ToggleUserState({ user }: { user: User }) {
         });
     };
 
-    const handleSubmit: FormEventHandler = (event) => {
-        event.preventDefault();
-
-        const submitEvent = event.nativeEvent as SubmitEvent;
-        const button = submitEvent.submitter as HTMLButtonElement;
-        const action = button?.value;
-
-        if (action === 'toggle') {
-            handleToggleState(event);
-        } else {
-            handleDelete(event);
-        }
+    const handleRestore: FormEventHandler = (
+        e: React.MouseEvent<HTMLButtonElement>,
+    ): void => {
+        e.preventDefault();
+        patch(route('users.restore', user.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                notifications.show({
+                    title: 'Success',
+                    message: 'Account restored successfully!',
+                    color: 'green',
+                });
+                createTenantModalManager.close();
+            },
+            onError: () => passwordInput.current?.focus(),
+            onFinish: () => {
+                reset();
+            },
+        });
     };
+
+    useEffect(() => {
+        const handleEnterKey = (e: KeyboardEvent) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        };
+
+        window.addEventListener('keydown', handleEnterKey);
+
+        return () => {
+            window.removeEventListener('keydown', handleEnterKey);
+        };
+    }, []);
 
     return (
         <>
@@ -81,7 +106,7 @@ function ToggleUserState({ user }: { user: User }) {
                 onClose={() => {
                     createTenantModalManager.close();
                 }}
-                size="xl"
+                size="lg"
                 title="Delete User"
             >
                 <header>
@@ -99,7 +124,7 @@ function ToggleUserState({ user }: { user: User }) {
                     </p>
                 </header>
 
-                <form onSubmit={handleSubmit} className="mt-6 w-full">
+                <form className="mt-6 w-full">
                     <div className="w-full">
                         <div className="">
                             <PasswordInput
@@ -136,37 +161,63 @@ function ToggleUserState({ user }: { user: User }) {
                             Cancel
                         </Button>
                         <Button
-                            type="submit"
+                            type="button"
                             name="action"
                             value="toggle"
                             variant="filled"
                             color={user.is_active ? 'yellow' : 'green'}
                             loaderProps={{ type: 'dots' }}
+                            onClick={handleToggleState}
                         >
                             {user.is_active ? 'Deactivate' : 'Activate'}
                         </Button>
 
-                        <Button
-                            type="submit"
-                            name="action"
-                            value="delete"
-                            variant="filled"
-                            color="red"
-                            loaderProps={{ type: 'dots' }}
-                        >
-                            Delete
-                        </Button>
+                        {user.deleted_at ? (
+                            <Button
+                                type="button"
+                                name="action"
+                                value="restore"
+                                variant="filled"
+                                color="green"
+                                loaderProps={{ type: 'dots' }}
+                                onClick={handleRestore}
+                            >
+                                Restore
+                            </Button>
+                        ) : (
+                            <Button
+                                type="button"
+                                name="action"
+                                value="delete"
+                                variant="filled"
+                                color="red"
+                                loaderProps={{ type: 'dots' }}
+                                onClick={handleDelete}
+                            >
+                                Delete
+                            </Button>
+                        )}
                     </div>
                 </form>
             </Modal>
 
             <span
-                className={`cursor-pointer ${user.is_active ? 'text-red-600' : 'text-green-600'} hover:underline`}
+                className={`cursor-pointer ${
+                    user.deleted_at
+                        ? 'text-green-600'
+                        : user.is_active
+                          ? 'text-red-600'
+                          : 'text-green-600'
+                } hover:underline`}
                 onClick={() => {
                     createTenantModalManager.open();
                 }}
             >
-                {user.is_active ? 'Delete User' : 'Activate'}
+                {user.deleted_at
+                    ? 'Restore'
+                    : user.is_active
+                      ? 'Delete User'
+                      : 'Activate'}
             </span>
         </>
     );

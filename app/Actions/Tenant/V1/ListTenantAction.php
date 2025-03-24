@@ -10,6 +10,10 @@ class ListTenantAction
     {
         $query = Tenant::query()->with(['domain', 'createdBy.profile', 'updatedBy.profile'])->orderBy('id', $request->sorting ?: 'desc');
 
+        if (auth()->user()->role === 'admin') {
+            $query->withTrashed();
+        }
+
         if ($request->filled('tenant_number')) {
             $query->where('tenant_number', 'like', '%'.strtoupper($request->tenant_number).'%');
         }

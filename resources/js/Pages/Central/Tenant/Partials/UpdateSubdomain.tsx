@@ -3,7 +3,7 @@ import { router, useForm } from '@inertiajs/react';
 import { Button, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { FormEvent, FormEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 
 function UpdateSubdomain({ tenant }: { tenant: Tenant }) {
     const [loading, { open, close }] = useDisclosure();
@@ -11,7 +11,7 @@ function UpdateSubdomain({ tenant }: { tenant: Tenant }) {
         domain: tenant.domain.domain,
     });
 
-    const handleSubmit: FormEventHandler = (e: FormEvent<Element>): void => {
+    const handleSubmit: FormEventHandler = (e): void => {
         e.preventDefault();
         open();
         put(route('domains.update', tenant.domain.id), {

@@ -26,7 +26,7 @@ class TenantController extends Controller
     {
         $this->authorize('viewAny', Tenant::class);
 
-        return Inertia::render('Tenant/Index', [
+        return Inertia::render('Central/Tenant/Index', [
             'timezones' => Timezone::getValues(),
             'tenants' => $tenantListAction($request),
             'filters' => [
@@ -52,7 +52,7 @@ class TenantController extends Controller
     {
         $this->authorize('view', $tenant);
 
-        return Inertia::render('Tenant/TenantDetails', [
+        return Inertia::render('Central/Tenant/TenantDetails', [
             'timezones' => Timezone::getValues(),
             'tenantStatus' => TenantStatus::getValues(),
             'tenant_data' => $tenant->load('domain'),

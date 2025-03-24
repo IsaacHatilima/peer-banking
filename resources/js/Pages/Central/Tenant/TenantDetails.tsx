@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import TenantData from '@/Pages/Tenant/Partials/TenantData';
-import TenantUsers from '@/Pages/Tenant/Partials/TenantUsers';
-import UpdateSubdomain from '@/Pages/Tenant/Partials/UpdateSubdomain';
+import TenantData from '@/Pages/Central/Tenant/Partials/TenantData';
+import TenantUsers from '@/Pages/Central/Tenant/Partials/TenantUsers';
+import UpdateSubdomain from '@/Pages/Central/Tenant/Partials/UpdateSubdomain';
 import { Tenant } from '@/types/tenant';
 import { Head, usePage, WhenVisible } from '@inertiajs/react';
 import { Badge, Card, Divider, Tabs, Text, Title } from '@mantine/core';
@@ -35,20 +35,7 @@ function TenantDetails() {
         if (!queryParams.has('tab')) {
             setActiveTab(defaultTab);
         }
-    }, [window.location.search]);
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const tab = urlParams.get('tab');
-
-        if (tab !== 'users') {
-            urlParams.delete('first_name');
-            urlParams.delete('last_name');
-
-            const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-            window.history.replaceState({}, '', newUrl);
-        }
-    }, [window.location.search]);
+    }, []);
 
     return (
         <AuthenticatedLayout>
@@ -127,7 +114,7 @@ function TenantDetails() {
 
                     <Tabs.Panel value="users">
                         <WhenVisible data="tenant_users" fallback="Loading">
-                            <TenantUsers />
+                            <TenantUsers tenant={tenant_data} />
                         </WhenVisible>
                     </Tabs.Panel>
 

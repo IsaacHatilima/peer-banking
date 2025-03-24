@@ -3,7 +3,7 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { Button, Modal, PasswordInput, Select, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { FormEvent, FormEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 
 function TenantData({ tenant }: { tenant: Tenant }) {
     const timezones: Array<string> = usePage().props.timezones as Array<string>;
@@ -37,7 +37,7 @@ function TenantData({ tenant }: { tenant: Tenant }) {
         timezone: tenant.timezone,
     });
 
-    const handleSubmit: FormEventHandler = (e: FormEvent<Element>): void => {
+    const handleSubmit: FormEventHandler = (e): void => {
         e.preventDefault();
         open();
         put(route('tenants.update', tenant.id), {
@@ -58,9 +58,7 @@ function TenantData({ tenant }: { tenant: Tenant }) {
         });
     };
 
-    const handleDeleteTenant: FormEventHandler = (
-        e: FormEvent<Element>,
-    ): void => {
+    const handleDeleteTenant: FormEventHandler = (e): void => {
         e.preventDefault();
         open();
         destroy(route('tenants.destroy', tenant.id), {

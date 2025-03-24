@@ -13,6 +13,7 @@ export interface User {
     copied_codes?: boolean;
     is_active: boolean;
     role: string;
+    deleted_at: string;
     profile: Profile;
 }
 

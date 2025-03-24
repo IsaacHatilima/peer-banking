@@ -8,6 +8,7 @@ import {
     TextInput,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { FormEventHandler } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import GuestLayout from '../../Layouts/GuestLayout';
@@ -23,6 +24,7 @@ export default function Login({
     status?: string;
     googleError?: string;
 }) {
+    const tenantState: string = usePage().props.errors.tenantState as string;
     const socialAuth = usePage().props.socialAuth as SocialAuthProps;
     const fortifyAuth = usePage().props.fortifyAuth;
     const twoFactorType = usePage().props.twoFactorType ?? 'default';
@@ -90,6 +92,17 @@ export default function Login({
     return (
         <GuestLayout>
             <Head title="Log in" />
+
+            {tenantState && (
+                <Alert
+                    variant="light"
+                    color="yellow"
+                    title="Warning"
+                    icon={<IconAlertCircle />}
+                >
+                    {tenantState}
+                </Alert>
+            )}
 
             {status && (
                 <Alert variant="light" color="green" title="Success">

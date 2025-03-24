@@ -6,7 +6,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { FormEvent, FormEventHandler } from 'react';
+import { FormEventHandler } from 'react';
 
 dayjs.extend(utc);
 
@@ -30,7 +30,7 @@ export default function UpdateProfileInformation({
             : null,
     });
 
-    const submit: FormEventHandler = (e: FormEvent<Element>): void => {
+    const submit: FormEventHandler = (e): void => {
         e.preventDefault();
         open();
         patch(route('profile.update'), {

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import CreateTenant from '@/Pages/Tenant/Partials/CreateTenant';
+import CreateTenant from '@/Pages/Central/Tenant/Partials/CreateTenant';
 import { PaginatedTenants, Tenant } from '@/types/tenant';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react';
 import {
@@ -34,7 +34,8 @@ function Index() {
         contact_name: filters?.contact_name || '',
         sorting: 'desc',
     });
-    const handleSearch = debounce(() => {
+
+    const buildQueryParams = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const currentPage = urlParams.get('page') || 1;
         const filtersApplied = Object.keys(data).some(
@@ -55,14 +56,23 @@ function Index() {
             }
         });
 
+        return params;
+    };
+
+    const debouncedSearch = debounce(() => {
+        const params = buildQueryParams();
         router.get(route('tenants'), params, {
             preserveState: true,
         });
     }, 300);
 
     useEffect(() => {
-        handleSearch();
-    }, [data]);
+        debouncedSearch();
+
+        return () => {
+            debouncedSearch.cancel();
+        };
+    }, [data, debouncedSearch]);
 
     const rows = paginatedTenants.data.map((tenant: Tenant) => (
         <Table.Tr key={tenant.id}>

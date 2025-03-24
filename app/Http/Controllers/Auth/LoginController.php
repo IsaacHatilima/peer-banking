@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\TenantStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
@@ -18,6 +19,7 @@ class LoginController extends Controller
     {
         return Inertia::render('Auth/Login', [
             'status' => session('status'),
+            'tenantState' => session('tenantState'),
             'twoFactorType' => session('email') ? $this->auth_type(session('email')) : null,
             'fortifyAuth' => config('auth.fortify_auth'),
             'socialAuth' => [
@@ -38,6 +40,12 @@ class LoginController extends Controller
 
     public function auth_check(LoginRequest $request)
     {
+        if (tenant() && tenant()->status == TenantStatus::IN_ACTIVE->value) {
+            return back()->withErrors([
+                'tenantState' => 'Group is Inactive.',
+            ]);
+        }
+
         $twoFactorType = $this->auth_type($request->email);
 
         if ($twoFactorType) {

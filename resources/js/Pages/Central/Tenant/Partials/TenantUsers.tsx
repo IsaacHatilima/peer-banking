@@ -6,8 +6,8 @@ import { Table, TextInput } from '@mantine/core';
 import { debounce } from 'lodash';
 import { useEffect } from 'react';
 
-function TenantUsers() {
-    const tenant: Tenant = usePage().props.tenant;
+function TenantUsers({ tenant }: { tenant: Tenant }) {
+    // const tenant: Tenant = usePage().props.tenant;
     const tenantUsers = usePage().props.tenant_users as PaginatedUsers;
     const filters: TenantUserFilter = usePage().props
         .filters as TenantUserFilter;
@@ -76,11 +76,11 @@ function TenantUsers() {
                 last_name: '',
             });
         }
-    }, [window.location.search]);
+    }, [setData]);
 
     useEffect(() => {
         handleSearch();
-    }, [data]);
+    }, [data, handleSearch]);
 
     return (
         <div>
