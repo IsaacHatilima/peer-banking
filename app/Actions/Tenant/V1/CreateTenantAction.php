@@ -2,12 +2,22 @@
 
 namespace App\Actions\Tenant\V1;
 
+use App\Actions\PasswordGenerator;
+use App\Enums\TenantRole;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Support\Facades\Hash;
 
 class CreateTenantAction
 {
+    private PasswordGenerator $passwordGenerator;
+
+    public function __construct(PasswordGenerator $passwordGenerator)
+    {
+        $this->passwordGenerator = $passwordGenerator;
+    }
+
     public function __invoke($request)
     {
         $tenant = Tenant::create([
@@ -22,6 +32,7 @@ class CreateTenantAction
             'contact_last_name' => ucwords($request->contact_last_name),
             'contact_email' => strtolower($request->contact_email),
             'contact_phone' => $request->contact_phone,
+            'timezone' => $request->timezone,
             'created_by' => auth()->user()->id,
         ]);
 
@@ -30,10 +41,12 @@ class CreateTenantAction
         ]);
 
         $tenant->run(function ($tenant) use ($request) {
+            $password = $this->passwordGenerator->make();
             $user = User::create([
                 'tenant_id' => $tenant->id,
                 'email' => strtolower($request->contact_email),
-                'password' => Hash::make('Password1#'),
+                'password' => Hash::make($password),
+                'role' => TenantRole::ADMIN,
             ]);
 
             $user->profile()->create([
@@ -41,6 +54,8 @@ class CreateTenantAction
                 'first_name' => ucwords($request->contact_first_name),
                 'last_name' => ucwords($request->contact_last_name),
             ]);
+
+            $user->notify(new VerifyEmailNotification($user));
         });
 
         return $tenant;

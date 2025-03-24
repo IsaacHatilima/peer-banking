@@ -11,6 +11,10 @@ class ListTenantUserAction
         return $tenant->run(function () use ($request) {
             $query = User::query()->with('profile')->orderBy('created_at', 'desc');
 
+            if (auth()->user()->role === 'admin') {
+                $query->withTrashed();
+            }
+
             if ($request->filled('first_name')) {
                 $query->whereHas('profile', function ($q) use ($request) {
                     $q->where('first_name', 'like', '%'.ucwords($request->first_name).'%');

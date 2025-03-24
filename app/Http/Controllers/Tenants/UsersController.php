@@ -6,7 +6,9 @@ use App\Actions\TenantUser\CreateTenantUserAction;
 use App\Actions\TenantUser\DeleteTenantUserAction;
 use App\Actions\TenantUser\ListTenantUserAction;
 use App\Actions\TenantUser\PatchTenantUserAction;
+use App\Actions\TenantUser\RestoreTenantUserAction;
 use App\Actions\TenantUser\UpdateTenantUserAction;
+use App\Enums\TenantRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\CreateTenantUsersRequest;
@@ -24,7 +26,8 @@ class UsersController extends Controller
     {
         $this->authorize('viewAny', [User::class, tenant()]);
 
-        return Inertia::render('Tenant/TenantPages/Users', [
+        return Inertia::render('TenantPages/Users', [
+            'tenantRoles' => TenantRole::getValues(),
             'users' => $listTenantUserAction(tenant(), $request),
             'filters' => $request->only(['first_name', 'last_name', 'email', 'role', 'verified', 'active']),
         ]);
@@ -52,6 +55,15 @@ class UsersController extends Controller
         $this->authorize('delete', [User::class, tenant()]);
 
         $deleteTenantUserAction($user);
+
+        return redirect()->back();
+    }
+
+    public function restore(CurrentPasswordRequest $request, $userId, RestoreTenantUserAction $restoreTenantUserAction)
+    {
+        $user = User::withTrashed()->firstWhere('id', $userId);
+        $this->authorize('restore', [User::class, tenant()]);
+        $restoreTenantUserAction($user);
 
         return redirect()->back();
     }

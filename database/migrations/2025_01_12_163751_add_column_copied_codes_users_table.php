@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('copied_codes')->default(false)->after('two_factor_confirmed_at');
+            $table->boolean('copied_fortify_codes')->default(false)->after('two_factor_confirmed_at');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('copied_codes');
+            $table->dropColumn('copied_fortify_codes');
         });
     }
 };

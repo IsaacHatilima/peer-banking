@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Task;
-use App\Observers\TaskObserver;
 use Illuminate\Support\ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -19,8 +17,5 @@ class EventServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        Task::observe(TaskObserver::class);
-    }
+    public function boot(): void {}
 }

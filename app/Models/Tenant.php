@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
@@ -16,7 +16,7 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains, HasFactory, HasUuids;
+    use HasDatabase, HasDomains, HasFactory, HasUuids, SoftDeletes;
 
     public static function getCustomColumns(): array
     {
@@ -39,6 +39,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'contact_last_name',
             'tenant_number',
             'slug',
+            'timezone',
             'created_by',
             'updated_by',
         ];
@@ -59,17 +60,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public function getCreatedAtAttribute($value): string
     {
-        return Carbon::parse($value)->format('Y-m-d H:i:s');
+        return Carbon::parse($value)->setTimezone($this->timezone)->format('Y-m-d H:i:s');
     }
 
     public function getUpdatedAtAttribute($value): string
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
-
-    public function tenantUsers(): HasMany
-    {
-        return $this->hasMany(User::class);
     }
 
     public function domain(): HasOne

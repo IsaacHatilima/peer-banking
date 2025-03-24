@@ -3,7 +3,7 @@ import DeactivateTwoFactor from '@/Pages/Profile/Partials/DeactivateTwoFactor';
 import EnableTowFactor from '@/Pages/Profile/Partials/EnableTowFactor';
 import { User } from '@/types/user';
 import { router, usePage } from '@inertiajs/react';
-import { Button } from '@mantine/core';
+import { Button, Card } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
@@ -74,7 +74,7 @@ function TwoFactorConfig() {
     };
 
     return (
-        <section>
+        <Card shadow="sm" padding="lg" radius="md" withBorder={false}>
             <header>
                 <h2 className="text-lg font-medium">
                     Two-Factor Authentication Settings
@@ -144,7 +144,7 @@ function TwoFactorConfig() {
             ) : (
                 <EnableTowFactor />
             )}
-        </section>
+        </Card>
     );
 }
 

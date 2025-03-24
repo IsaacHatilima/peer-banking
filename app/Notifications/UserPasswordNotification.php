@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedById;
 
 class UserPasswordNotification extends Notification implements ShouldQueue
 {
@@ -40,6 +41,8 @@ class UserPasswordNotification extends Notification implements ShouldQueue
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @throws TenantCouldNotBeIdentifiedById
      */
     public function toMail(object $notifiable): MailMessage
     {

@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\TenantRole;
 use App\Models\Tenant;
 use App\Models\User;
 
@@ -20,7 +21,7 @@ class UserPolicy
      */
     public function view(User $user, Tenant $tenant): bool
     {
-        return $user->tenant_id == $tenant->id;
+        return $user->tenant_id == $tenant->id && $user->role == TenantRole::ADMIN->value;
     }
 
     /**
@@ -28,7 +29,7 @@ class UserPolicy
      */
     public function create(User $user, Tenant $tenant): bool
     {
-        return $user->tenant_id == $tenant->id;
+        return $user->tenant_id == $tenant->id && $user->role == TenantRole::ADMIN->value;
     }
 
     /**
@@ -36,7 +37,7 @@ class UserPolicy
      */
     public function update(User $user, Tenant $tenant): bool
     {
-        return $user->tenant_id == $tenant->id;
+        return $user->tenant_id == $tenant->id && $user->role == TenantRole::ADMIN->value;
     }
 
     /**
@@ -44,15 +45,15 @@ class UserPolicy
      */
     public function delete(User $user, Tenant $tenant): bool
     {
-        return $user->tenant_id == $tenant->id;
+        return $user->tenant_id == $tenant->id && $user->role == TenantRole::ADMIN->value;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, User $model): bool
+    public function restore(User $user, Tenant $tenant): bool
     {
-        return false;
+        return $user->tenant_id == $tenant->id && $user->role == TenantRole::ADMIN->value;
     }
 
     /**

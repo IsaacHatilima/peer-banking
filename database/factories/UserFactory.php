@@ -28,7 +28,7 @@ class UserFactory extends Factory
         return [
             'email' => fake()->unique()->safeEmail(),
             'role' => 'admin',
-            'email_verified_at' => now(),
+            'email_verified_at' => config('app.env') == 'production' ? null : now(),
             'password' => static::$password ??= Hash::make('Password1#'),
             'remember_token' => Str::random(10),
         ];

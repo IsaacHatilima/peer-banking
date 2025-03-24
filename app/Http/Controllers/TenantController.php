@@ -7,6 +7,8 @@ use App\Actions\Tenant\V1\DeleteTenantAction;
 use App\Actions\Tenant\V1\ListTenantAction;
 use App\Actions\Tenant\V1\UpdateTenantAction;
 use App\Actions\TenantUser\ListTenantUserAction;
+use App\Enums\TenantStatus;
+use App\Enums\TimeZone;
 use App\Http\Requests\Auth\CurrentPasswordRequest;
 use App\Http\Requests\TenantRequest;
 use App\Http\Requests\UpdateTenantRequest;
@@ -24,7 +26,8 @@ class TenantController extends Controller
     {
         $this->authorize('viewAny', Tenant::class);
 
-        return Inertia::render('Tenant/Index', [
+        return Inertia::render('Central/Tenant/Index', [
+            'timezones' => Timezone::getValues(),
             'tenants' => $tenantListAction($request),
             'filters' => [
                 'name' => $request->name,
@@ -49,7 +52,9 @@ class TenantController extends Controller
     {
         $this->authorize('view', $tenant);
 
-        return Inertia::render('Tenant/TenantDetails', [
+        return Inertia::render('Central/Tenant/TenantDetails', [
+            'timezones' => Timezone::getValues(),
+            'tenantStatus' => TenantStatus::getValues(),
             'tenant_data' => $tenant->load('domain'),
             'tenant_users' => Inertia::optional(fn () => $listTenantUserAction($tenant, $request)),
             'filters' => [

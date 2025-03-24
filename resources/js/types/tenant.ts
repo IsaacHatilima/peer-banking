@@ -21,6 +21,7 @@ export interface Tenant {
     updated_by: User;
     created_at: string;
     updated_at: string;
+    timezone: string;
 }
 
 export interface PaginatedTenants {
