@@ -2,13 +2,8 @@
 
 namespace App\Actions;
 
-use Random\RandomException;
-
 class PasswordGenerator
 {
-    /**
-     * @throws RandomException
-     */
     public function make(): string
     {
         $upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -17,16 +12,16 @@ class PasswordGenerator
         $specialChars = '!@#$%^&*()-_=+<>?';
 
         $password = [
-            $upperCase[random_int(0, strlen($upperCase) - 1)],
-            $lowerCase[random_int(0, strlen($lowerCase) - 1)],
-            $numbers[random_int(0, strlen($numbers) - 1)],
-            $specialChars[random_int(0, strlen($specialChars) - 1)],
+            $upperCase[mt_rand(0, strlen($upperCase) - 1)],
+            $lowerCase[mt_rand(0, strlen($lowerCase) - 1)],
+            $numbers[mt_rand(0, strlen($numbers) - 1)],
+            $specialChars[mt_rand(0, strlen($specialChars) - 1)],
         ];
 
         $allCharacters = $upperCase.$lowerCase.$numbers.$specialChars;
 
         for ($i = 4; $i < 16; $i++) {
-            $password[] = $allCharacters[random_int(0, strlen($allCharacters) - 1)];
+            $password[] = $allCharacters[mt_rand(0, strlen($allCharacters) - 1)];
         }
 
         shuffle($password);

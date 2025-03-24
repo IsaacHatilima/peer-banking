@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\TenantStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Tenant;
 use App\Models\User;
 use App\Notifications\SendTwoFactorCode;
 use Hash;
@@ -40,7 +41,10 @@ class LoginController extends Controller
 
     public function auth_check(LoginRequest $request)
     {
-        if (tenant() && tenant()->status == TenantStatus::IN_ACTIVE->value) {
+        /** @var Tenant $tenant */
+        $tenant = tenant();
+
+        if ($tenant?->status == TenantStatus::IN_ACTIVE->value) {
             return back()->withErrors([
                 'tenantState' => 'Group is Inactive.',
             ]);
@@ -83,14 +87,14 @@ class LoginController extends Controller
         return User::where('email', $email)->first();
     }
 
-    private function login($user, $request)
+    private function login($user, $request): void
     {
         Auth::login($user);
         $request->session()->regenerate();
 
         session(['tenant_id' => tenant('id')]);
 
-        return redirect()->intended(route('dashboard'));
+        redirect()->intended(route('dashboard'));
     }
 
     public function email_two_factor(): Response
@@ -102,9 +106,9 @@ class LoginController extends Controller
 
     public function email_two_factor_authenticate(Request $request)
     {
-        $user = User::where('two_factor_code', $request->code)->first();
+        $user = User::firstWhere('two_factor_code', $request->code);
 
-        if ($user && now() > $user->two_factor_expires_at) {
+        if (now() > $user?->email_two_factor_expires_at) {
             return back()->withErrors([
                 'code' => 'Invalid or Expired code provided.',
             ]);

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -67,11 +66,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public function getUpdatedAtAttribute($value): string
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
-    }
-
-    public function tenantUsers(): HasMany
-    {
-        return $this->hasMany(User::class);
     }
 
     public function domain(): HasOne

@@ -36,7 +36,7 @@ class SendTwoFactorCode extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('2FA Code')
-            ->line("Your two-factor code is {$notifiable->two_factor_code}")
+            ->line("Your two-factor code is $notifiable->two_factor_code")
             ->action('Verify Here', route('login.email.two.factor'))
             ->line('The code will expire in 5 minutes')
             ->line("If you didn't request this, please ignore.");
