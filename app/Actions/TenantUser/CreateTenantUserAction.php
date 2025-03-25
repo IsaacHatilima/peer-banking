@@ -30,6 +30,7 @@ class CreateTenantUserAction
             'email' => strtolower($request->email),
             'password' => Hash::make($password),
             'role' => strtolower($request->role),
+            'created_by' => auth()->id(),
         ]);
 
         ($this->createProfileAction)($request, $user);

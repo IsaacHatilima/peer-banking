@@ -5,13 +5,14 @@ import EditUser from '@/Pages/TenantPages/Partials/EditUser';
 import ToggleUserState from '@/Pages/TenantPages/Partials/ToggleUserState';
 import { PaginatedUsers, TenantUserFilter, User } from '@/types/user';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
-import { Badge, Card, Input, Table, TextInput } from '@mantine/core';
+import { Badge, Card, Table, TextInput } from '@mantine/core';
 import { debounce } from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaUserTie } from 'react-icons/fa';
 import { FaUserLarge } from 'react-icons/fa6';
 
 export default function Users() {
+    const [isFiltering, setIsFiltering] = useState(false);
     const tenantUsers = usePage().props.users as PaginatedUsers;
     const filters: TenantUserFilter = usePage().props
         .filters as TenantUserFilter;
@@ -79,11 +80,15 @@ export default function Users() {
     ));
 
     const handleSearch = debounce(() => {
+        setIsFiltering(true);
+
         const urlParams = new URLSearchParams(window.location.search);
         const currentPage = urlParams.get('page') || '1';
-        const filtersPresent = Object.keys(data).some((key) =>
-            urlParams.has(key),
+
+        const filtersPresent = Object.keys(data).some(
+            (key) => data[key as keyof TenantUserFilter] !== '',
         );
+
         const setOrDeleteParam = (key: string, value: string | undefined) => {
             if (value) {
                 urlParams.set(key, value);
@@ -115,8 +120,10 @@ export default function Users() {
     }, 300);
 
     useEffect(() => {
-        handleSearch();
-    }, [data, handleSearch]);
+        if (isFiltering) {
+            handleSearch();
+        }
+    }, [data, isFiltering]);
 
     return (
         <AuthenticatedLayout>
@@ -152,9 +159,10 @@ export default function Users() {
                                     name="first_name"
                                     placeholder="First Name"
                                     value={data.first_name}
-                                    onChange={(e) =>
-                                        setData('first_name', e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setData('first_name', e.target.value);
+                                        setIsFiltering(true);
+                                    }}
                                 />
                             </Table.Th>
                             <Table.Th>
@@ -165,9 +173,10 @@ export default function Users() {
                                     name="last_name"
                                     placeholder="Last Name"
                                     value={data.last_name}
-                                    onChange={(e) =>
-                                        setData('last_name', e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setData('last_name', e.target.value);
+                                        setIsFiltering(true);
+                                    }}
                                 />
                             </Table.Th>
                             <Table.Th>
@@ -178,58 +187,11 @@ export default function Users() {
                                     name="email"
                                     placeholder="E-Mail"
                                     value={data.email}
-                                    onChange={(e) =>
-                                        setData('email', e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setData('email', e.target.value);
+                                        setIsFiltering(true);
+                                    }}
                                 />
-                            </Table.Th>
-                            <Table.Th>
-                                <Input
-                                    size="xs"
-                                    id="role"
-                                    name="role"
-                                    component="select"
-                                    value={data.role}
-                                    onChange={(e) =>
-                                        setData('role', e.target.value)
-                                    }
-                                >
-                                    <option value="">All</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">User</option>
-                                </Input>
-                            </Table.Th>
-                            <Table.Th>
-                                <Input
-                                    size="xs"
-                                    id="verified"
-                                    name="verified"
-                                    component="select"
-                                    value={data.verified}
-                                    onChange={(e) =>
-                                        setData('verified', e.target.value)
-                                    }
-                                >
-                                    <option value="">All</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </Input>
-                            </Table.Th>
-                            <Table.Th>
-                                <Input
-                                    size="xs"
-                                    id="active"
-                                    name="active"
-                                    component="select"
-                                    value={data.active}
-                                    onChange={(e) =>
-                                        setData('active', e.target.value)
-                                    }
-                                >
-                                    <option value="">All</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </Input>
                             </Table.Th>
                         </Table.Tr>
                     </Table.Thead>

@@ -46,6 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_expires_at',
         'copied_codes',
         'role',
+        'created_by',
+        'updated_by',
+        'deleted_at',
     ];
 
     /**
@@ -57,6 +60,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    protected static function booted(): void
+    {
+        static::deleting(function ($user) {
+            $user->profile()->delete();
+            $user->updated_by = auth()->id();
+            $user->save();
+        });
+
+        static::restoring(function ($user) {
+            $user->profile()->withTrashed()->restore();
+            $user->updated_by = auth()->id();
+            $user->save();
+        });
+    }
 
     public function profile(): HasOne
     {

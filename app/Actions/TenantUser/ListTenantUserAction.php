@@ -9,7 +9,11 @@ class ListTenantUserAction
     public function __invoke($tenant, $request)
     {
         return $tenant->run(function () use ($request) {
-            $query = User::query()->with('profile')->orderBy('created_at', 'desc');
+            $query = User::query()
+                ->with(['profile' => function ($query) {
+                    $query->withTrashed();
+                }])
+                ->orderBy('created_at', 'desc');
 
             if (auth()->user()->role === 'admin') {
                 $query->withTrashed();

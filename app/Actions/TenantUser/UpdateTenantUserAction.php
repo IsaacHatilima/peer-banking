@@ -13,6 +13,7 @@ class UpdateTenantUserAction
 
         $user->email = strtolower($request->email);
         $user->role = strtolower($request->role);
+        $user->updated_by = auth()->id();
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;

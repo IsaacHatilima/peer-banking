@@ -31,6 +31,11 @@ return new class extends Migration
             $table->softDeletes();
         });
 
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->restrictOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->restrictOnDelete();
+        });
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
