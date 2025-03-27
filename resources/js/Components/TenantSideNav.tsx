@@ -22,6 +22,19 @@ function TenantSideNav({ user }: { user: User }) {
                   },
               ]
             : []),
+        {
+            icon: MdSpaceDashboard,
+            label: 'Payments',
+            href: '',
+            children: [
+                {
+                    icon: MdSpaceDashboard,
+                    label: 'Stripe',
+                    href: route('stripe.index'),
+                    children: [],
+                },
+            ],
+        },
     ];
 
     return (

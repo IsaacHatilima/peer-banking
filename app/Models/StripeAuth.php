@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 
 class StripeAuth extends Model
 {
@@ -17,14 +19,8 @@ class StripeAuth extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'stripe_key',
-        'stripe_secret',
-        'stripe_webhook_secret',
-        'currency',
-        'currency_locale',
-        'created_by',
-        'updated_by',
+    protected $guarded = [
+        'id',
     ];
 
     public function createdBy(): BelongsTo
@@ -35,5 +31,29 @@ class StripeAuth extends Model
     public function updatedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    protected function stripeKey(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Crypt::decryptString($value) : '',
+            set: fn ($value) => $value ? Crypt::encryptString($value) : null
+        );
+    }
+
+    protected function stripeSecret(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Crypt::decryptString($value) : '',
+            set: fn ($value) => $value ? Crypt::encryptString($value) : null
+        );
+    }
+
+    protected function stripeWebhookSecret(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Crypt::decryptString($value) : '',
+            set: fn ($value) => $value ? Crypt::encryptString($value) : null
+        );
     }
 }

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Tenants\UsersController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -28,13 +27,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::middleware('auth')->group(function () {
-        Route::get('/users', [UsersController::class, 'index'])->name('users');
-        Route::post('/users', [UsersController::class, 'store'])->name('users.store');
-        Route::put('/user/{user}', [UsersController::class, 'update'])->name('users.update');
-        Route::delete('/delete-user/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
-        Route::patch('/restore-user/{userId}', [UsersController::class, 'restore'])->name('users.restore');
-        Route::put('/toggle-user-status/{user}', [UsersController::class, 'patch'])->name('users.toggle');
-
+        require __DIR__.'/tenant-routes/index.php';
     });
 
     require __DIR__.'/guest-common.php';

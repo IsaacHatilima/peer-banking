@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('currency');
             $table->string('currency_locale');
             $table->foreignUuid('created_by')->constrained('users');
-            $table->foreignUuid('updated_by')->constrained('users');
+            $table->foreignUuid('updated_by')->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

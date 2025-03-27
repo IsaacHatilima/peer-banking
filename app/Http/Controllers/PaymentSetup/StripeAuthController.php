@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\PaymentSetup;
 
+use App\Actions\Stripe\V1\CreateStripeAuthAction;
+use App\Actions\Stripe\V1\UpdateStripeAuthAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StripeAuthRequest;
 use App\Models\StripeAuth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Inertia\Inertia;
 
 class StripeAuthController extends Controller
 {
@@ -14,14 +18,17 @@ class StripeAuthController extends Controller
     {
         $this->authorize('viewAny', StripeAuth::class);
 
-        return StripeAuth::all();
+        return Inertia::render('TenantPages/PaymentSetup/Stripe', [
+            'stripeAuth' => StripeAuth::first(),
+        ]);
     }
 
-    public function store(StripeAuthRequest $request)
+    public function store(StripeAuthRequest $request, CreateStripeAuthAction $createStripeAuthAction)
     {
         $this->authorize('create', StripeAuth::class);
+        $createStripeAuthAction($request);
 
-        return StripeAuth::create($request->validated());
+        return redirect()->back();
     }
 
     public function show(StripeAuth $stripeAuth)
@@ -31,13 +38,13 @@ class StripeAuthController extends Controller
         return $stripeAuth;
     }
 
-    public function update(StripeAuthRequest $request, StripeAuth $stripeAuth)
+    public function update(StripeAuthRequest $request, StripeAuth $stripeAuth, UpdateStripeAuthAction $updateStripeAuthAction)
     {
         $this->authorize('update', $stripeAuth);
 
-        $stripeAuth->update($request->validated());
+        $updateStripeAuthAction($stripeAuth, $request);
 
-        return $stripeAuth;
+        return redirect()->back();
     }
 
     public function destroy(StripeAuth $stripeAuth)

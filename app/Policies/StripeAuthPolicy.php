@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\TenantRole;
 use App\Models\StripeAuth;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -13,7 +14,10 @@ class StripeAuthPolicy
     /**
      * Determine whether the user can view any stripe auths.
      */
-    public function viewAny(User $user): bool {}
+    public function viewAny(User $user): bool
+    {
+        return $user->role == TenantRole::ADMIN->value;
+    }
 
     /**
      * Determine whether the user can view the stripe auth.
@@ -23,12 +27,18 @@ class StripeAuthPolicy
     /**
      * Determine whether the user can create stripe auths.
      */
-    public function create(User $user): bool {}
+    public function create(User $user): bool
+    {
+        return $user->role == TenantRole::ADMIN->value;
+    }
 
     /**
      * Determine whether the user can update the stripe auth.
      */
-    public function update(User $user, StripeAuth $stripeAuth): bool {}
+    public function update(User $user, StripeAuth $stripeAuth): bool
+    {
+        return $user->role == TenantRole::ADMIN->value;
+    }
 
     /**
      * Determine whether the user can delete the stripe auth.

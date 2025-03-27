@@ -13,7 +13,6 @@ class StripeAuthRequest extends FormRequest
             'stripe_secret' => ['required'],
             'stripe_webhook_secret' => ['required'],
             'currency' => ['required'],
-            'currency_locale' => ['required'],
         ];
     }
 
