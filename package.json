@@ -54,6 +54,8 @@
         "@mantine/dates": "^7.15.2",
         "@mantine/hooks": "^7.17.2",
         "@mantine/notifications": "^7.16.1",
+        "@stripe/react-stripe-js": "^3.5.1",
+        "@stripe/stripe-js": "^6.1.0",
         "@tabler/icons-react": "^3.31.0",
         "dayjs": "^1.11.13",
         "dayjs-plugin-utc": "^0.1.2",

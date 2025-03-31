@@ -15,6 +15,7 @@ export default function Stripe() {
             : '',
         currency: stripeAuth ? stripeAuth.currency : 'eur',
     });
+
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault();
 

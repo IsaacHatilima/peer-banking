@@ -15,7 +15,6 @@ class CreateStripeAuthAction
             'currency' => $request->currency,
             'currency_locale' => $request->currency == 'eur' ? 'de_DE' : 'en_US',
             'created_by' => auth()->id(),
-            'updated_by' => auth()->id(),
         ]);
     }
 }

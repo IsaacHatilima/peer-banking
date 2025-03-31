@@ -22,7 +22,10 @@ class StripeAuthPolicy
     /**
      * Determine whether the user can view the stripe auth.
      */
-    public function view(User $user, StripeAuth $stripeAuth): bool {}
+    public function view(User $user, StripeAuth $stripeAuth): bool
+    {
+        return false;
+    }
 
     /**
      * Determine whether the user can create stripe auths.
@@ -43,15 +46,24 @@ class StripeAuthPolicy
     /**
      * Determine whether the user can delete the stripe auth.
      */
-    public function delete(User $user, StripeAuth $stripeAuth): bool {}
+    public function delete(User $user, StripeAuth $stripeAuth): bool
+    {
+        return false;
+    }
 
     /**
      * Determine whether the user can restore the stripe auth.
      */
-    public function restore(User $user, StripeAuth $stripeAuth): bool {}
+    public function restore(User $user, StripeAuth $stripeAuth): bool
+    {
+        return false;
+    }
 
     /**
      * Determine whether the user can permanently delete the stripe auth.
      */
-    public function forceDelete(User $user, StripeAuth $stripeAuth): bool {}
+    public function forceDelete(User $user, StripeAuth $stripeAuth): bool
+    {
+        return false;
+    }
 }

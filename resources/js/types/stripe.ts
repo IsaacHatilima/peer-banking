@@ -5,3 +5,8 @@ export interface StripeType {
     stripe_webhook_secret: string;
     currency: string;
 }
+
+export interface SetupIntentType {
+    id: string;
+    client_secret: string;
+}
