@@ -53,7 +53,6 @@ class UsersController extends Controller
     public function destroy(CurrentPasswordRequest $request, User $user, DeleteTenantUserAction $deleteTenantUserAction)
     {
         $this->authorize('delete', [User::class, tenant()]);
-
         $deleteTenantUserAction($user);
 
         return redirect()->back();
@@ -71,7 +70,6 @@ class UsersController extends Controller
     public function patch(CurrentPasswordRequest $request, User $user, PatchTenantUserAction $patchTenantUserAction)
     {
         $this->authorize('delete', [User::class, tenant()]);
-
         $patchTenantUserAction($user);
 
         return redirect()->back();

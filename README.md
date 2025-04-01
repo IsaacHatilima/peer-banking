@@ -2,17 +2,19 @@ Here’s the updated README with PostgreSQL multi-schema support explicitly ment
 
 ---
 
-# **React Inertia Laravel Tailwind (RILT) Multi-Tenancy Starter Kit**
+# **React Inertia Laravel Tailwind (RILT) SaaS Starter Kit**
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/IsaacHatilima/multi-tenancy)
 
-## 🚀 Project Status: **Active Maintenance**
+## 🚀 Project Status: **Active Development**
 
 ## 📌 About the Project
 
-This starter kit streamlines the development of multi-tenant web applications using **Laravel, React, Inertia.js, and
+This starter kit streamlines the development of multi-tenant SaS web applications using **Laravel, React, Inertia.js,
+and
 Tailwind CSS**. It provides **authentication and multi-tenancy out of the box**, leveraging the **Tenancy for Laravel**
-package with a **PostgreSQL multi-schema setup** for tenant database isolation.
+package with a **PostgreSQL multi-schema setup** for tenant database isolation. Payments are handled by Laravel Cashier(
+Stripe)
 
 ### ✨ **Key Features**
 
@@ -24,6 +26,7 @@ controllers.
 ✅ **Full-Stack SPA Experience** – Powered by **React & Inertia.js** for smooth, client-server interactions.  
 ✅ **Modern UI** – Styled with **Tailwind CSS & Mantine UI** for fast and responsive UI development.  
 ✅ **Scalable & Extensible** – Easily add new features without breaking core functionality.
+✅ **Laravel Cashier(Stripe)** - Using the cashier package to process subscription payments for client licenses.
 
 ---
 

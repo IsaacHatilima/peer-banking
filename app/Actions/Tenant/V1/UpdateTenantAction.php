@@ -19,7 +19,7 @@ class UpdateTenantAction
             'contact_email' => strtolower($request->contact_email),
             'contact_phone' => $request->contact_phone,
             'timezone' => $request->timezone,
-            'updated_by' => auth()->user()->id,
+            'updated_by' => auth()->id(),
         ]);
 
         return $tenant->refresh();

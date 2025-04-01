@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->restrictOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone')->nullable();

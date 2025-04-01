@@ -124,7 +124,7 @@ function ToggleUserState({ user }: { user: User }) {
                     </p>
                 </header>
 
-                <form className="mt-6 w-full">
+                <form onSubmit={handleRestore} className="mt-6 w-full">
                     <div className="w-full">
                         <div className="">
                             <PasswordInput
@@ -160,20 +160,10 @@ function ToggleUserState({ user }: { user: User }) {
                         >
                             Cancel
                         </Button>
-                        <Button
-                            type="button"
-                            name="action"
-                            value="toggle"
-                            variant="filled"
-                            color={user.is_active ? 'yellow' : 'green'}
-                            loaderProps={{ type: 'dots' }}
-                            onClick={handleToggleState}
-                        >
-                            {user.is_active ? 'Deactivate' : 'Activate'}
-                        </Button>
 
                         {user.deleted_at ? (
                             <Button
+                                id="restore"
                                 type="button"
                                 name="action"
                                 value="restore"
@@ -185,17 +175,31 @@ function ToggleUserState({ user }: { user: User }) {
                                 Restore
                             </Button>
                         ) : (
-                            <Button
-                                type="button"
-                                name="action"
-                                value="delete"
-                                variant="filled"
-                                color="red"
-                                loaderProps={{ type: 'dots' }}
-                                onClick={handleDelete}
-                            >
-                                Delete
-                            </Button>
+                            <div className="flex justify-end gap-2">
+                                <Button
+                                    type="button"
+                                    name="action"
+                                    value="toggle"
+                                    variant="filled"
+                                    color={user.is_active ? 'yellow' : 'green'}
+                                    loaderProps={{ type: 'dots' }}
+                                    onClick={handleToggleState}
+                                >
+                                    {user.is_active ? 'Deactivate' : 'Activate'}
+                                </Button>
+                                <Button
+                                    id="delete"
+                                    type="button"
+                                    name="action"
+                                    value="delete"
+                                    variant="filled"
+                                    color="red"
+                                    loaderProps={{ type: 'dots' }}
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </Button>
+                            </div>
                         )}
                     </div>
                 </form>

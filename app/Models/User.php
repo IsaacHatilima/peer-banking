@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
@@ -18,7 +19,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, HasUuids, Notifiable, SoftDeletes, TwoFactorAuthenticatable;
+    use Billable, HasFactory, HasUuids, Notifiable, SoftDeletes, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +47,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_expires_at',
         'copied_codes',
         'role',
+        'stripe_id',
+        'pm_type',
+        'pm_last_four',
+        'created_by',
+        'updated_by',
+        'deleted_at',
     ];
 
     /**
@@ -57,6 +64,35 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    /*public static function createSetupIntent(): array
+    {
+        Stripe::setApiKey(config('cashier.secret'));
+
+        $setupIntent = SetupIntent::create([
+            'payment_method_types' => ['card'],
+        ]);
+
+        return [
+            'id' => $setupIntent->id,
+            'client_secret' => $setupIntent->client_secret,
+        ];
+    }*/
+
+    protected static function booted(): void
+    {
+        static::deleting(function ($user) {
+            $user->profile()->delete();
+            $user->updated_by = auth()->id();
+            $user->save();
+        });
+
+        static::restoring(function ($user) {
+            $user->profile()->withTrashed()->restore();
+            $user->updated_by = auth()->id();
+            $user->save();
+        });
+    }
 
     public function profile(): HasOne
     {

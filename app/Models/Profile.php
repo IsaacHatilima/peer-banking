@@ -13,8 +13,19 @@ class Profile extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'first_name',
+        'user_id',
+        'last_name',
+        'gender',
+        'phone',
+        'street',
+        'house_number',
+        'city',
+        'zip',
+        'state',
+        'date_of_birth',
+        'deleted_at',
     ];
 
     public function user(): BelongsTo

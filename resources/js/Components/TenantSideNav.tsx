@@ -22,6 +22,25 @@ function TenantSideNav({ user }: { user: User }) {
                   },
               ]
             : []),
+        {
+            icon: MdSpaceDashboard,
+            label: 'Licenses',
+            href: route('license.index'),
+            children: [],
+        },
+        {
+            icon: MdSpaceDashboard,
+            label: 'Payment Options',
+            href: '',
+            children: [
+                {
+                    icon: MdSpaceDashboard,
+                    label: 'Stripe',
+                    href: route('stripe.index'),
+                    children: [],
+                },
+            ],
+        },
     ];
 
     return (

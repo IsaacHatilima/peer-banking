@@ -1,10 +1,7 @@
+/* eslint-disable prettier/prettier */
 import { createInertiaApp } from '@inertiajs/react';
-import {
-    createTheme,
-    localStorageColorSchemeManager,
-    MantineProvider,
-    rem,
-} from '@mantine/core';
+import { createTheme, localStorageColorSchemeManager, MantineProvider, rem } from '@mantine/core';
+import '../css/app.css';
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
@@ -12,7 +9,7 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot, hydrateRoot } from 'react-dom/client';
-import '../css/app.css';
+
 import './bootstrap';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';

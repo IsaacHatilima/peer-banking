@@ -9,6 +9,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @noinspection DuplicatedCode
      */
     public function up(): void
     {
@@ -26,6 +28,11 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->restrictOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->restrictOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

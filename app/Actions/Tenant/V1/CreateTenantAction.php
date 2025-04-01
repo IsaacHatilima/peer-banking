@@ -6,6 +6,7 @@ use App\Actions\PasswordGenerator;
 use App\Enums\TenantRole;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Notifications\UserPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +34,7 @@ class CreateTenantAction
             'contact_email' => strtolower($request->contact_email),
             'contact_phone' => $request->contact_phone,
             'timezone' => $request->timezone,
-            'created_by' => auth()->user()->id,
+            'created_by' => auth()->id(),
         ]);
 
         $tenant->domain()->create([
@@ -55,6 +56,7 @@ class CreateTenantAction
                 'last_name' => ucwords($request->contact_last_name),
             ]);
 
+            $user->notify(new UserPasswordNotification($user, $password, $tenant));
             $user->notify(new VerifyEmailNotification($user));
         });
 
