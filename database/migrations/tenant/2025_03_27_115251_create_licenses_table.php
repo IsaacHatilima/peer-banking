@@ -11,13 +11,6 @@ return new class extends Migration
         Schema::create('licenses', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users')->restrictOnDelete();
-            $table->foreignUuid('updated_by')->nullable()->constrained('users')->restrictOnDelete();
-            $table->double('unit_price');
-            $table->integer('quantity');
-            $table->double('total_price');
-            $table->string('status');
-            $table->string('payment_method');
-            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

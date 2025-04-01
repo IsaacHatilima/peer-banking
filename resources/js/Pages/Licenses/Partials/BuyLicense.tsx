@@ -41,9 +41,6 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
 
         const { error } = await stripe.confirmSetup({
             elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/completion`,
-            },
             redirect: 'if_required',
         });
 
@@ -87,6 +84,7 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
     return (
         <div>
             <Modal
+                size="md"
                 opened={modalState}
                 onClose={() => setModalState.close()}
                 title="Purchase License"

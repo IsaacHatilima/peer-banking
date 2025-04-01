@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\License\BuyLicenseAction;
 use App\Http\Requests\LicenseRequest;
 use App\Models\License;
-use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Stripe\SetupIntent;
-use Stripe\Stripe;
 
 class LicenseController extends Controller
 {
@@ -20,11 +16,9 @@ class LicenseController extends Controller
     {
         $this->authorize('viewAny', License::class);
 
-        $intent = User::createSetupIntent();
-
         return Inertia::render('Licenses/Index', [
-            'licenses' => License::paginate(10),
-            'intent' => $intent,
+            'licenses' => License::with('subscription')->paginate(10),
+            'intent' => auth()->user()->createSetupIntent(['payment_method_types' => ['card']]),
             'stripeKey' => config('cashier.key'),
         ]);
     }
@@ -40,19 +34,6 @@ class LicenseController extends Controller
         }
 
         return redirect()->back()->withErrors(['error' => 'An error occurred while processing your subscription.']);
-    }
-
-    public function completion(Request $request)
-    {
-        $setupIntentId = $request->query('setup_intent');
-
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        $setupIntent = SetupIntent::retrieve($setupIntentId);
-
-        session(['payment_method' => $setupIntent->payment_method]);
-
-        return redirect()->back();
     }
 
     public function show(License $license)

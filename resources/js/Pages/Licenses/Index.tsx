@@ -19,25 +19,22 @@ export default function Index() {
 
     const [clientSecret, setClientSecret] = useState('');
 
-    const [isLoading, setIsLoading] = useState<boolean>(true); // Optional: To show loading state
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (intent?.client_secret) {
             setClientSecret(intent.client_secret);
-            setIsLoading(false); // Set loading to false once clientSecret is available
+            setIsLoading(false);
         } else {
-            setIsLoading(false); // Handle case when there's no client_secret
-            // Optionally show a fallback error or retry logic here
+            setIsLoading(false);
         }
     }, [intent]);
 
     if (isLoading) {
-        // You can return a loading spinner or some other placeholder content
         return <div>Loading...</div>;
     }
 
     if (!clientSecret) {
-        // Optionally show an error if the clientSecret is missing
         return (
             <div>
                 Error: Unable to load payment details. Please try again later.
@@ -47,10 +44,10 @@ export default function Index() {
 
     const rows = licenses?.data.map((license: LicenseType) => (
         <Table.Tr key={license.id}>
-            <Table.Td>€ {license.unit_price}</Table.Td>
-            <Table.Td>{license.quantity}</Table.Td>
-            <Table.Td>€ {license.total_price}</Table.Td>
-            <Table.Td>{license.status}</Table.Td>
+            <Table.Td>€2.50</Table.Td>
+            <Table.Td>{license.subscription.quantity}</Table.Td>
+            <Table.Td>€{license.subscription.quantity * 2.5}</Table.Td>
+            <Table.Td>{license.subscription.stripe_status}</Table.Td>
         </Table.Tr>
     ));
     return (

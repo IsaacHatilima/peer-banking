@@ -12,8 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
-use Stripe\SetupIntent;
-use Stripe\Stripe;
 
 /**
  * @property mixed $tenant_id
@@ -67,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    public static function createSetupIntent(): array
+    /*public static function createSetupIntent(): array
     {
         Stripe::setApiKey(config('cashier.secret'));
 
@@ -79,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'id' => $setupIntent->id,
             'client_secret' => $setupIntent->client_secret,
         ];
-    }
+    }*/
 
     protected static function booted(): void
     {

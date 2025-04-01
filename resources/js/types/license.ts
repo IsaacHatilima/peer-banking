@@ -1,11 +1,17 @@
 import { PaginationLink } from '@/types/tenant';
+import { User } from '@/types/user';
 
 export type LicenseType = {
     id: string;
-    status: string;
-    unit_price: string;
-    quantity: string;
-    total_price: string;
+    user: User;
+    subscription: Subscription;
+};
+
+export type Subscription = {
+    id: string;
+    stripe_status: string;
+    quantity: number;
+    ends_at: string;
 };
 
 export type PaginatedLicenseType = {
