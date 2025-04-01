@@ -46,6 +46,7 @@ export default function Index() {
         <Table.Tr key={license.id}>
             <Table.Td>€2.50</Table.Td>
             <Table.Td>{license.subscription.quantity}</Table.Td>
+            <Table.Td>{license.used}</Table.Td>
             <Table.Td>€{license.subscription.quantity * 2.5}</Table.Td>
             <Table.Td>{license.subscription.stripe_status}</Table.Td>
         </Table.Tr>
@@ -71,6 +72,7 @@ export default function Index() {
                         <Table.Tr>
                             <Table.Th>Unit Price</Table.Th>
                             <Table.Th>Quantity</Table.Th>
+                            <Table.Th>Used</Table.Th>
                             <Table.Th>Total Price</Table.Th>
                             <Table.Th>Status</Table.Th>
                         </Table.Tr>

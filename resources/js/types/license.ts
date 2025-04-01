@@ -5,6 +5,7 @@ export type LicenseType = {
     id: string;
     user: User;
     subscription: Subscription;
+    used: number;
 };
 
 export type Subscription = {

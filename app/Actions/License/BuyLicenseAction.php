@@ -13,10 +13,21 @@ class BuyLicenseAction
 {
     public function __invoke($request): string
     {
+        $subscription = $this->process_subscription($request->user, $request);
+
+        License::create([
+            'subscription_id' => $subscription->id,
+            'user_id' => $request->user->id,
+            'used' => 0,
+        ]);
+
+        return 'success';
+    }
+
+    private function process_subscription($user, $request)
+    {
         try {
             Stripe::setApiKey(config('cashier.secret'));
-
-            $user = $request->user();
 
             if (! $user->hasStripeId()) {
                 $user->createAsStripeCustomer();
@@ -44,21 +55,14 @@ class BuyLicenseAction
 
             $user->refresh();
 
-            $subscription = $user->newSubscription('default', 'price_1R7ZzjLCIwOX44eiG2msya0I')
+            return $user->newSubscription('default', 'price_1R7ZzjLCIwOX44eiG2msya0I')
                 ->quantity($request->quantity)
                 ->create($setupIntent->payment_method);
 
-            License::create([
-                'subscription_id' => $subscription->id,
-                'user_id' => $user->id,
-            ]);
-
-            return 'success';
         } catch (Exception $e) {
             Log::error('Error occurred while processing purchase: '.$e->getMessage());
 
             return 'error';
         }
-
     }
 }
