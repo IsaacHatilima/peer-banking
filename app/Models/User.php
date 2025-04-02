@@ -65,20 +65,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    /*public static function createSetupIntent(): array
-    {
-        Stripe::setApiKey(config('cashier.secret'));
-
-        $setupIntent = SetupIntent::create([
-            'payment_method_types' => ['card'],
-        ]);
-
-        return [
-            'id' => $setupIntent->id,
-            'client_secret' => $setupIntent->client_secret,
-        ];
-    }*/
-
     protected static function booted(): void
     {
         static::deleting(function ($user) {
@@ -97,6 +83,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function license(): HasOne
+    {
+        return $this->hasOne(License::class);
     }
 
     public function generateTwoFactorCode(): void
