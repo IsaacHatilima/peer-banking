@@ -12,6 +12,7 @@ class LicenseRequest extends FormRequest
             'unit_price' => ['required', 'numeric'],
             'quantity' => ['required', 'integer'],
             'setup_intent' => ['required', 'string'],
+            'card_holder' => ['required'],
         ];
     }
 

@@ -1,23 +1,16 @@
 import { PaginationLink } from '@/types/tenant';
-import { User } from '@/types/user';
 
-export type LicenseType = {
+export type Invoice = {
     id: string;
-    user: User;
-    subscription: Subscription;
-    used: number;
+    number: string;
+    created: string;
+    total: string;
+    download_url: string;
 };
 
-export type Subscription = {
-    id: string;
-    stripe_status: string;
-    quantity: number;
-    ends_at: string;
-};
-
-export type PaginatedLicenseType = {
+export type PaginatedInvoice = {
     current_page: number;
-    data: LicenseType[];
+    data: Invoice[];
     first_page_url: string;
     from: number;
     last_page: number;

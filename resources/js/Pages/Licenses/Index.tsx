@@ -2,7 +2,7 @@ import Layout from '@/Layouts/AuthenticatedLayout';
 import BuyLicense from '@/Pages/Licenses/Partials/BuyLicense';
 import { LicenseType, PaginatedLicenseType } from '@/types/license';
 import { SetupIntentType } from '@/types/stripe';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Card, Group, Pagination, Table } from '@mantine/core';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -47,7 +47,16 @@ export default function Index() {
             <Table.Td>€2.50</Table.Td>
             <Table.Td>{license.subscription.quantity}</Table.Td>
             <Table.Td>€{license.subscription.quantity * 2.5}</Table.Td>
+            <Table.Td>{license.used}</Table.Td>
             <Table.Td>{license.subscription.stripe_status}</Table.Td>
+            <Table.Td>
+                <Link
+                    href={route('license.show', license.id)}
+                    className="text-sky-500"
+                >
+                    View
+                </Link>
+            </Table.Td>
         </Table.Tr>
     ));
     return (
@@ -62,7 +71,15 @@ export default function Index() {
             >
                 <div className="flex justify-between">
                     <h2 className="mb-4 text-lg font-semibold">Users</h2>
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <Elements
+                        stripe={stripePromise}
+                        options={{
+                            clientSecret: clientSecret,
+                            appearance: {
+                                theme: 'stripe',
+                            },
+                        }}
+                    >
                         <BuyLicense intent={intent} />
                     </Elements>
                 </div>
@@ -72,6 +89,7 @@ export default function Index() {
                             <Table.Th>Unit Price</Table.Th>
                             <Table.Th>Quantity</Table.Th>
                             <Table.Th>Total Price</Table.Th>
+                            <Table.Th>Used</Table.Th>
                             <Table.Th>Status</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
