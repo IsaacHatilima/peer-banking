@@ -2,7 +2,7 @@ import Layout from '@/Layouts/AuthenticatedLayout';
 import BuyLicense from '@/Pages/Licenses/Partials/BuyLicense';
 import { LicenseType, PaginatedLicenseType } from '@/types/license';
 import { SetupIntentType } from '@/types/stripe';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Card, Group, Pagination, Table } from '@mantine/core';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -49,6 +49,14 @@ export default function Index() {
             <Table.Td>€{license.subscription.quantity * 2.5}</Table.Td>
             <Table.Td>{license.used}</Table.Td>
             <Table.Td>{license.subscription.stripe_status}</Table.Td>
+            <Table.Td>
+                <Link
+                    href={route('license.show', license.id)}
+                    className="text-sky-500"
+                >
+                    View
+                </Link>
+            </Table.Td>
         </Table.Tr>
     ));
     return (
