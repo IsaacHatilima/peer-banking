@@ -2,28 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\License\BuyLicenseAction;
+use App\Actions\License\CreateSubscriptionAction;
+use App\Actions\License\ListSubscriptionAction;
 use App\Http\Requests\LicenseRequest;
 use App\Models\License;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
+use Stripe\Exception\ApiErrorException;
 
 class LicenseController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index()
+    /**
+     * @throws ApiErrorException
+     */
+    public function index(ListSubscriptionAction $listSubscriptionAction)
     {
         $this->authorize('viewAny', License::class);
 
         return Inertia::render('Licenses/Index', [
-            'licenses' => License::with('subscription')->paginate(10),
-            'intent' => auth()->user()->createSetupIntent(['payment_method_types' => ['card']]),
+            'licenses' => $listSubscriptionAction->subscriptions(),
+            'licensePrice' => $listSubscriptionAction->get_subscription_price(),
+            'intent' => $listSubscriptionAction->payment_intent(),
             'stripeKey' => config('cashier.key'),
         ]);
     }
 
-    public function store(LicenseRequest $request, BuyLicenseAction $buyLicenseAction)
+    public function store(LicenseRequest $request, CreateSubscriptionAction $buyLicenseAction)
     {
         $this->authorize('create', License::class);
 
@@ -33,7 +39,7 @@ class LicenseController extends Controller
             return redirect()->back();
         }
 
-        return redirect()->back()->withErrors(['error' => 'An error occurred while processing your subscription.']);
+        return redirect()->back()->withErrors(['subscriptionError' => 'An error occurred while processing your subscription.']);
     }
 
     public function show(License $license)
@@ -41,23 +47,5 @@ class LicenseController extends Controller
         $this->authorize('view', $license);
 
         return $license;
-    }
-
-    public function update(LicenseRequest $request, License $license)
-    {
-        $this->authorize('update', $license);
-
-        $license->update($request->validated());
-
-        return $license;
-    }
-
-    public function destroy(License $license)
-    {
-        $this->authorize('delete', $license);
-
-        $license->delete();
-
-        return response()->json();
     }
 }

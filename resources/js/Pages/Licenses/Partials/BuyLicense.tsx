@@ -1,6 +1,7 @@
 import { SetupIntentType } from '@/types/stripe';
-import { useForm } from '@inertiajs/react';
-import { Button, Modal, NumberInput } from '@mantine/core';
+import { User } from '@/types/user';
+import { useForm, usePage } from '@inertiajs/react';
+import { Button, Modal, NumberInput, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import {
@@ -8,24 +9,25 @@ import {
     useElements,
     useStripe,
 } from '@stripe/react-stripe-js';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 
 function BuyLicense({ intent }: { intent: SetupIntentType }) {
+    const user: User = usePage().props.auth.user;
     const [modalState, setModalState] = useDisclosure(false);
     const [loading, { open, close }] = useDisclosure();
-
-    const unitPrice = 2.5;
-    const quantity = 1;
-    const totalPrice = (unitPrice * quantity).toFixed(2);
+    const unitPrice: number = usePage().props.licensePrice as number;
+    const [totalPrice, setTotalPrice] = useState(unitPrice);
 
     const { data, setData, errors, post, reset } = useForm<{
-        quantity: string | number;
-        unit_price: string;
+        quantity: number;
+        unit_price: number;
         setup_intent?: string;
+        card_holder: string;
     }>({
-        unit_price: unitPrice.toString(),
-        quantity: quantity,
+        unit_price: unitPrice,
+        quantity: 1,
         setup_intent: intent.id,
+        card_holder: user.profile.first_name + ' ' + user.profile.last_name,
     });
 
     const stripe = useStripe();
@@ -41,13 +43,20 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
 
         const { error } = await stripe.confirmSetup({
             elements,
+            confirmParams: {
+                payment_method_data: {
+                    billing_details: {
+                        name: data.card_holder,
+                    },
+                },
+            },
             redirect: 'if_required',
         });
 
         if (error?.type === 'card_error') {
             notifications.show({
                 title: 'Error',
-                message: 'card_error.',
+                message: 'Card error',
                 color: 'red',
             });
         } else if (error?.type === 'validation_error') {
@@ -69,11 +78,13 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
                 reset();
             },
             onError: (errors) => {
-                notifications.show({
-                    title: 'Error',
-                    message: errors.error,
-                    color: 'red',
-                });
+                if (errors.subscriptionError) {
+                    notifications.show({
+                        title: 'Error',
+                        message: errors.subscriptionError,
+                        color: 'yellow',
+                    });
+                }
             },
             onFinish: () => {
                 close();
@@ -90,11 +101,37 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
                 title="Purchase License"
             >
                 <form onSubmit={handleSubmit}>
+                    <div className="mb-2 flex items-center">
+                        <h1 className="text-3xl font-bold">
+                            Total: €{totalPrice}
+                        </h1>
+                    </div>
                     <div className="flex items-end">
-                        <h1 className="text-3xl font-bold">€{totalPrice}</h1>
+                        <h6 className="text-md font-bold">€{unitPrice}</h6>
                         <span className="text-gray-400">/user</span>
                     </div>
+                    <TextInput
+                        size="md"
+                        className="w-full"
+                        id="card_holder"
+                        name="card_holder"
+                        value={data.card_holder}
+                        error={errors.card_holder}
+                        withAsterisk
+                        autoComplete="card_holder"
+                        mt="md"
+                        label="Card Holder Name"
+                        onChange={(e) => setData('card_holder', e.target.value)}
+                        inputWrapperOrder={[
+                            'label',
+                            'input',
+                            'description',
+                            'error',
+                        ]}
+                    />
                     <NumberInput
+                        size="md"
+                        className="my-4"
                         min={1}
                         withAsterisk
                         allowNegative={false}
@@ -103,7 +140,13 @@ function BuyLicense({ intent }: { intent: SetupIntentType }) {
                         placeholder="6"
                         value={data.quantity}
                         error={errors.quantity}
-                        onChange={(value) => setData('quantity', value ?? 1)}
+                        onChange={(value) => {
+                            const quantity = Number(value) || 1;
+
+                            setData('quantity', quantity);
+
+                            setTotalPrice(unitPrice * quantity);
+                        }}
                     />
                     <div className="mt-2">
                         <PaymentElement id="payment-element" />

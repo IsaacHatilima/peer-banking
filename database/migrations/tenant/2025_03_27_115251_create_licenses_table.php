@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->integer('used')->default(0);
             $table->foreignUuid('user_id')->constrained('users')->restrictOnDelete();
             $table->timestamps();
             $table->softDeletes();
