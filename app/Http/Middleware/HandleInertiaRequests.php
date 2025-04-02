@@ -35,6 +35,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'profile' => $request->user()?->profile,
+                'license' => $request->user()?->license,
             ],
             'tenant' => tenant() ?: null,
             'ziggy' => fn () => [

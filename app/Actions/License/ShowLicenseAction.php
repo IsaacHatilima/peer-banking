@@ -13,6 +13,11 @@ class ShowLicenseAction
         return $license->load('subscription');
     }
 
+    public function license_users($license): object
+    {
+        return $license->users()->paginate(10);
+    }
+
     public function invoices(): LengthAwarePaginator
     {
         $user = auth()->user();

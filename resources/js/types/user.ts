@@ -1,4 +1,5 @@
 import { PaginationLink } from '@/types/tenant';
+import { LicenseType } from '@/types/license';
 
 export interface User {
     id: number;
@@ -15,6 +16,7 @@ export interface User {
     role: string;
     deleted_at: string;
     profile: Profile;
+    license: LicenseType;
 }
 
 export interface TenantUserFilter {

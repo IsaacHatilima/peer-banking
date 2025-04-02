@@ -50,6 +50,7 @@ class LicenseController extends Controller
         return Inertia::render('Licenses/LicenseDetails', [
             'license' => $showLicenseAction->retrieve_license($license),
             'invoices' => $showLicenseAction->invoices(),
+            'users' => $showLicenseAction->license_users($license),
         ]);
     }
 
