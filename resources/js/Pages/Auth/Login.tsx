@@ -3,19 +3,13 @@ import {
     Alert,
     Button,
     Checkbox,
-    Divider,
     PasswordInput,
     TextInput,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { FormEventHandler } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import GuestLayout from '../../Layouts/GuestLayout';
-
-interface SocialAuthProps {
-    google: boolean;
-}
 
 export default function Login({
     status,
@@ -25,7 +19,6 @@ export default function Login({
     googleError?: string;
 }) {
     const tenantState: string = usePage().props.errors.tenantState as string;
-    const socialAuth = usePage().props.socialAuth as SocialAuthProps;
     const fortifyAuth = usePage().props.fortifyAuth;
     const twoFactorType = usePage().props.twoFactorType ?? 'default';
     const [loading, { open, close }] = useDisclosure();
@@ -185,24 +178,6 @@ export default function Login({
                     </Button>
                 </div>
             </form>
-
-            <Divider my="xs" label="Or" labelPosition="center" />
-
-            <div className="mt-3 flex flex-col items-center justify-between gap-1">
-                {socialAuth.google && (
-                    <Button
-                        variant="filled"
-                        color="black"
-                        fullWidth
-                        onClick={() =>
-                            (window.location.href = route('google.redirect'))
-                        }
-                    >
-                        <FcGoogle size={25} />
-                        <span className="ml-2">Continue with Google</span>
-                    </Button>
-                )}
-            </div>
         </GuestLayout>
     );
 }

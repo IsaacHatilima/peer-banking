@@ -46,7 +46,7 @@ class CreateSubscriptionAction
 
             $user->refresh();
 
-            return $user->newSubscription('default', 'price_1R97ThPpltWhmAXzDJf388N6')
+            return $user->newSubscription('default', config('cashier.price'))
                 ->quantity($request->quantity)
                 ->create($setupIntent->payment_method);
 

@@ -9,4 +9,9 @@ class Subscription extends Model
     protected $table = 'subscriptions';
 
     protected $guarded = [];
+
+    public function getStripeStatusAttribute($value): string
+    {
+        return ucwords($value);
+    }
 }

@@ -6,7 +6,7 @@ use App\Actions\Profile\V1\CreateProfileAction;
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
 
-class ManualRegistrationAction
+class RegistrationAction
 {
     protected CreateProfileAction $createProfileAction;
 

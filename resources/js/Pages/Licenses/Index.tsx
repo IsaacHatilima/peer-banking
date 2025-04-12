@@ -1,8 +1,10 @@
 import Layout from '@/Layouts/AuthenticatedLayout';
 import BuyLicense from '@/Pages/Licenses/Partials/BuyLicense';
+import InvoiceList from '@/Pages/Licenses/Partials/InvoiceList';
+import { PaginatedInvoice } from '@/types/invoice';
 import { LicenseType, PaginatedLicenseType } from '@/types/license';
 import { SetupIntentType } from '@/types/stripe';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { Card, Group, Pagination, Table } from '@mantine/core';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -11,7 +13,10 @@ import { useEffect, useState } from 'react';
 export default function Index() {
     const licenses: PaginatedLicenseType = usePage().props
         .licenses as PaginatedLicenseType;
+    const invoices: PaginatedInvoice = usePage().props
+        .invoices as PaginatedInvoice;
     const intent: SetupIntentType = usePage().props.intent as SetupIntentType;
+    const licensePrice: number = usePage().props.licensePrice as number;
 
     const stripeKey: string = usePage().props.stripeKey as string;
 
@@ -19,20 +24,11 @@ export default function Index() {
 
     const [clientSecret, setClientSecret] = useState('');
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
     useEffect(() => {
         if (intent?.client_secret) {
             setClientSecret(intent.client_secret);
-            setIsLoading(false);
-        } else {
-            setIsLoading(false);
         }
     }, [intent]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
 
     if (!clientSecret) {
         return (
@@ -44,18 +40,13 @@ export default function Index() {
 
     const rows = licenses?.data.map((license: LicenseType) => (
         <Table.Tr key={license.id}>
-            <Table.Td>€2.50</Table.Td>
+            <Table.Td>€{licensePrice}</Table.Td>
             <Table.Td>{license.subscription.quantity}</Table.Td>
-            <Table.Td>€{license.subscription.quantity * 2.5}</Table.Td>
+            <Table.Td>€{license.subscription.quantity * licensePrice}</Table.Td>
             <Table.Td>{license.used}</Table.Td>
             <Table.Td>{license.subscription.stripe_status}</Table.Td>
             <Table.Td>
-                <Link
-                    href={route('license.show', license.id)}
-                    className="text-sky-500"
-                >
-                    View
-                </Link>
+                <InvoiceList invoices={invoices} />
             </Table.Td>
         </Table.Tr>
     ));
@@ -70,7 +61,9 @@ export default function Index() {
                 className="mt-2"
             >
                 <div className="flex justify-between">
-                    <h2 className="mb-4 text-lg font-semibold">Users</h2>
+                    <h2 className="mb-4 text-lg font-semibold">
+                        Subscriptions
+                    </h2>
                     <Elements
                         stripe={stripePromise}
                         options={{

@@ -1,13 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
-
-Route::get('/google/redirect', [GoogleAuthController::class, 'redirectToGoogle'])
-    ->name('google.redirect');
-
-Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
-    ->name('google.callback');
 
 Route::get('/', [LoginController::class, 'create'])
     ->name('login');

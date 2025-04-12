@@ -105,7 +105,7 @@ return [
 
         'options' => [
             // Supported: 'letter', 'legal', 'A4'
-            'paper' => env('CASHIER_PAPER', 'letter'),
+            'paper' => env('CASHIER_PAPER', 'A4'),
         ],
     ],
 
@@ -121,5 +121,7 @@ return [
     */
 
     'logger' => env('CASHIER_LOGGER'),
+    'price' => env('CASHIER_PRICE', null),
+    'payment_method' => env('STRIPE_PAYMENT_METHOD', null),
 
 ];

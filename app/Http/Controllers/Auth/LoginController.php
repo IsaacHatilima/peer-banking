@@ -23,11 +23,6 @@ class LoginController extends Controller
             'tenantState' => session('tenantState'),
             'twoFactorType' => session('email') ? $this->auth_type(session('email')) : null,
             'fortifyAuth' => config('auth.fortify_auth'),
-            'socialAuth' => [
-                'google' => config('auth.socialAuth.google'),
-                'github' => config('auth.socialAuth.github'),
-                'facebook' => config('auth.socialAuth.facebook'),
-            ],
         ]);
     }
 

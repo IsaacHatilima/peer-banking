@@ -12,6 +12,7 @@ export type Subscription = {
     id: string;
     stripe_status: string;
     quantity: number;
+    stripe_price: number;
     ends_at: string;
 };
 

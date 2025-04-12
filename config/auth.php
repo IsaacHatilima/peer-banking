@@ -112,12 +112,6 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
-    'socialAuth' => [
-        'google' => env('GOOGLE_SOCIAL_AUTH', false),
-        'github' => env('GITHUB_SOCIAL_AUTH', false),
-        'facebook' => env('FACEBOOK_SOCIAL_AUTH', false),
-    ],
-
     'fortify_auth' => env('FORTIFY_AUTH', 'false'),
 
 ];

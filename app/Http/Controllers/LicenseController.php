@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\License\CreateSubscriptionAction;
 use App\Actions\License\ListSubscriptionAction;
-use App\Actions\License\ShowLicenseAction;
 use App\Http\Requests\LicenseRequest;
 use App\Models\License;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -24,8 +23,9 @@ class LicenseController extends Controller
 
         return Inertia::render('Licenses/Index', [
             'licenses' => $listSubscriptionAction->subscriptions(),
-            'licensePrice' => $listSubscriptionAction->get_subscription_price(),
-            'intent' => $listSubscriptionAction->payment_intent(),
+            'invoices' => $listSubscriptionAction->invoices(),
+            'licensePrice' => $listSubscriptionAction->getSubscriptionPrice(),
+            'intent' => $listSubscriptionAction->paymentIntent(),
             'stripeKey' => config('cashier.key'),
         ]);
     }
@@ -43,18 +43,7 @@ class LicenseController extends Controller
         return redirect()->back()->withErrors(['subscriptionError' => 'An error occurred while processing your subscription.']);
     }
 
-    public function show(License $license, ShowLicenseAction $showLicenseAction)
-    {
-        $this->authorize('view', $license);
-
-        return Inertia::render('Licenses/LicenseDetails', [
-            'license' => $showLicenseAction->retrieve_license($license),
-            'invoices' => $showLicenseAction->invoices(),
-            'users' => $showLicenseAction->license_users($license),
-        ]);
-    }
-
-    public function download_invoice($invoiceId)
+    public function downloadInvoice($invoiceId)
     {
         return auth()->user()->downloadInvoice($invoiceId, [
             'vendor' => 'Isaac Hatilima',

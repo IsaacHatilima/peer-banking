@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Auth\V1\Registration\ManualRegistrationAction;
+use App\Actions\Auth\V1\Registration\RegistrationAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(RegisterRequest $request, ManualRegistrationAction $registerAction)
+    public function store(RegisterRequest $request, RegistrationAction $registerAction)
     {
         $user = $registerAction($request);
 
