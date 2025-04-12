@@ -14,6 +14,7 @@ export interface User {
     copied_codes?: boolean;
     is_active: boolean;
     role: string;
+    license_id: string;
     deleted_at: string;
     profile: Profile;
     license: LicenseType;

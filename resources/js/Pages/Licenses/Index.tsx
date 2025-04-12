@@ -4,7 +4,7 @@ import InvoiceList from '@/Pages/Licenses/Partials/InvoiceList';
 import { PaginatedInvoice } from '@/types/invoice';
 import { LicenseType, PaginatedLicenseType } from '@/types/license';
 import { SetupIntentType } from '@/types/stripe';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Card, Group, Pagination, Table } from '@mantine/core';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -46,7 +46,15 @@ export default function Index() {
             <Table.Td>{license.used}</Table.Td>
             <Table.Td>{license.subscription.stripe_status}</Table.Td>
             <Table.Td>
-                <InvoiceList invoices={invoices} />
+                <div className="flex gap-2">
+                    <InvoiceList invoices={invoices} />
+                    <Link
+                        href={route('license.show', license.id)}
+                        className="cursor-pointer text-teal-700"
+                    >
+                        Issue License
+                    </Link>
+                </div>
             </Table.Td>
         </Table.Tr>
     ));

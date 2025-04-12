@@ -8,15 +8,11 @@ use App\Http\Requests\LicenseRequest;
 use App\Models\License;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
-use Stripe\Exception\ApiErrorException;
 
 class LicenseController extends Controller
 {
     use AuthorizesRequests;
 
-    /**
-     * @throws ApiErrorException
-     */
     public function index(ListSubscriptionAction $listSubscriptionAction)
     {
         $this->authorize('viewAny', License::class);

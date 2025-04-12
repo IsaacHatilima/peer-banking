@@ -3,7 +3,6 @@
 namespace App\Actions\License;
 
 use App\Models\License;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -119,10 +118,5 @@ class ListSubscriptionAction
         }
 
         return $allCustomers;
-    }
-
-    public function unlicensedUsers(): object
-    {
-        return User::whereNull('license_id')->paginate(10);
     }
 }
