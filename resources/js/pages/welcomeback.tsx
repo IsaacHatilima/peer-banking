@@ -7,7 +7,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    navigationMenuTriggerStyle,
+    navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { home } from '@/routes';
