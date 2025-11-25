@@ -7,7 +7,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    navigationMenuTriggerStyle,
+    navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { home } from '@/routes';
@@ -63,7 +63,7 @@ export default function Welcome() {
                     <img
                         src="/images/finance-8836903_1920.jpg"
                         alt="financial banner"
-                        className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                        className="h-full w-full object-cover"
                     />
 
                     <div className="absolute inset-0 bg-black/50" />
@@ -91,7 +91,7 @@ export default function Welcome() {
                     {/* IMAGE */}
                     <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
                         <img
-                            src="/images/wallet-3721156_640.png"
+                            src="/images/wallet.svg"
                             alt="coins and currency"
                             className="h-[600px] w-[600px] rounded-full object-cover shadow-lg"
                         />
@@ -159,7 +159,7 @@ export default function Welcome() {
                     {/* IMAGE */}
                     <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
                         <img
-                            src="/images/contribute.png"
+                            src="/images/send.svg"
                             alt="coins and currency"
                             className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
                         />
@@ -204,7 +204,7 @@ export default function Welcome() {
                     {/* IMAGE */}
                     <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
                         <img
-                            src="/images/loan.jpg"
+                            src="/images/loan.svg"
                             alt="coins and currency"
                             className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
                         />
@@ -218,7 +218,7 @@ export default function Welcome() {
                     {/* IMAGE */}
                     <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
                         <img
-                            src="/images/payout.png"
+                            src="/images/chill.svg"
                             alt="coins and currency"
                             className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
                         />
@@ -271,17 +271,142 @@ export default function Welcome() {
                 </section>
 
                 {/* GET STARTED */}
+                <section className="mx-auto mt-20 max-w-6xl px-6">
+                    <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white">
+                        Pricing
+                    </h2>
+                    <p className="mt-3 text-center text-lg text-gray-600 dark:text-gray-300">
+                        Simple, transparent plans designed for every circle
+                        size.
+                    </p>
+
+                    <div className="mt-12 grid gap-8 md:grid-cols-4">
+                        {/* FREE */}
+                        <div className="rounded-xl border bg-white p-6 text-center shadow-sm hover:border-2 hover:border-[#77ebfc] dark:border-gray-700 dark:bg-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                Free
+                            </h3>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                                For small friend groups starting out.
+                            </p>
+
+                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+                                €0
+                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    /mo
+                                </span>
+                            </div>
+
+                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <li>✔ Up to 5 members</li>
+                                <li>✔ 1 active circle</li>
+                                <li>✔ Basic interest tracking</li>
+                            </ul>
+
+                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg">
+                                Get Started
+                            </button>
+                        </div>
+
+                        {/* BASIC */}
+                        <div className="rounded-xl border-2 bg-white p-6 text-center shadow-md hover:border-2 hover:border-[#77ebfc] dark:border-[#77ebfc] dark:bg-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                Basic
+                            </h3>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                                Perfect for active peer groups.
+                            </p>
+
+                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+                                €15
+                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    /mo
+                                </span>
+                            </div>
+
+                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <li>✔ Up to 50 members</li>
+                                <li>✔ Unlimited circles</li>
+                                <li>✔ Smart loan reminders</li>
+                                <li>✔ Custom cycle durations</li>
+                            </ul>
+
+                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl">
+                                Choose Standard
+                            </button>
+                        </div>
+
+                        {/* STANDARD */}
+                        <div className="rounded-xl border-2 border-[#77ebfc] bg-white p-6 text-center shadow-md hover:border-2 hover:border-[#77ebfc] dark:border-[#77ebfc] dark:bg-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                Standard
+                            </h3>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                                Perfect for active peer groups.
+                            </p>
+
+                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+                                €35
+                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    /mo
+                                </span>
+                            </div>
+
+                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <li>✔ Up to 100 members</li>
+                                <li>✔ Unlimited circles</li>
+                                <li>✔ Smart loan reminders</li>
+                                <li>✔ Custom cycle durations</li>
+                                <li>✔ Dashboard export</li>
+                            </ul>
+
+                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl">
+                                Choose Standard
+                            </button>
+                        </div>
+
+                        {/* PREMIUM */}
+                        <div className="rounded-xl border bg-white p-6 text-center shadow-sm hover:border-2 hover:border-[#77ebfc] dark:border-gray-700 dark:bg-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                Premium
+                            </h3>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                                For large communities & savings clubs.
+                            </p>
+
+                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
+                                €65
+                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    /mo
+                                </span>
+                            </div>
+
+                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <li>✔ Unlimited members</li>
+                                <li>✔ Priority support</li>
+                                <li>✔ Advanced analytics</li>
+                                <li>✔ Scheduled loan rules</li>
+                                <li>✔ Full export & audit history</li>
+                            </ul>
+
+                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg">
+                                Go Premium
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
                 <div className="my-20 flex items-center justify-center">
                     <button
                         type="button"
-                        className="rounded-lg bg-[#46acb8] px-6 py-3.5 text-base font-medium text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl"
+                        className="rounded-lg bg-[#77ebfc] px-6 py-3.5 text-base font-medium text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl"
                     >
                         Get started
                     </button>
                 </div>
 
                 {/* FOOTER */}
-                <footer className="mt-20 w-full rounded-2xl bg-[#46acb8] py-10 text-white">
+                <footer className="mt-20 w-full rounded-2xl bg-[#77ebfc] py-10 text-white">
                     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 md:grid-cols-3">
                         {/* Address */}
                         <div>
