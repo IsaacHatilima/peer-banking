@@ -23,10 +23,12 @@
     <style>
         html {
             background-color: oklch(1 0 0);
+            scroll-behavior: smooth;
         }
 
         html.dark {
             background-color: oklch(0.145 0 0);
+            scroll-behavior: smooth;
         }
     </style>
 
@@ -43,7 +45,7 @@
     @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
     @inertiaHead
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased scroll-smooth">
 @inertia
 </body>
 </html>

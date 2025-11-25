@@ -10,8 +10,8 @@ import {
     navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { home } from '@/routes';
-import { Link } from '@inertiajs/react';
+import { home, register } from '@/routes';
+import { Link, router } from '@inertiajs/react';
 
 export default function Welcome() {
     const isMobile = useIsMobile();
@@ -39,15 +39,9 @@ export default function Welcome() {
                                     asChild
                                     className={navigationMenuTriggerStyle()}
                                 >
-                                    <Link href={home()}>About</Link>
-                                </NavigationMenuLink>
-                            </NavigationMenuItem>
-                            <NavigationMenuItem>
-                                <NavigationMenuLink
-                                    asChild
-                                    className={navigationMenuTriggerStyle()}
-                                >
-                                    <Link href={home()}>Other</Link>
+                                    <Link href="#about-peer-banking">
+                                        About
+                                    </Link>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
                         </NavigationMenuList>
@@ -59,7 +53,7 @@ export default function Welcome() {
             </Card>
             <div className="m-1 mt-3">
                 {/* HERO */}
-                <div className="relative aspect-[16/6] w-full overflow-hidden rounded-lg">
+                <div className="relative w-full overflow-hidden rounded-lg md:aspect-[16/6]">
                     <img
                         src="/images/finance-8836903_1920.jpg"
                         alt="financial banner"
@@ -69,12 +63,12 @@ export default function Welcome() {
                     <div className="absolute inset-0 bg-black/50" />
 
                     <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-                        <h2 className="animate-[slideUpFade_0.6s_ease-out_forwards] text-5xl font-extrabold text-white opacity-0 drop-shadow-lg delay-100">
+                        <h2 className="animate-[slideUpFade_0.6s_ease-out_forwards] font-extrabold text-white opacity-0 drop-shadow-lg delay-100 md:text-5xl">
                             Peer Banking — A Smarter Way to Save, Lend & Grow
                             Together
                         </h2>
 
-                        <p className="mt-3 max-w-4xl animate-[slideUpFade_0.6s_ease-out_forwards] text-xl text-white/90 opacity-0 delay-300">
+                        <p className="mt-3 max-w-4xl animate-[slideUpFade_0.6s_ease-out_forwards] text-white/90 opacity-0 delay-300 md:text-xl">
                             Turn your group of friends or family into a shared
                             financial safety net. Contribute monthly, borrow
                             when life happens, and earn interest as a team —
@@ -85,7 +79,7 @@ export default function Welcome() {
 
                 {/* ABOUT SECTION */}
                 <section
-                    className="mx-5 mt-10 flex items-center justify-center"
+                    className="mx-5 mt-10 flex flex-col items-center justify-center md:flex-row"
                     id="about-peer-banking"
                 >
                     {/* IMAGE */}
@@ -93,13 +87,13 @@ export default function Welcome() {
                         <img
                             src="/images/wallet.svg"
                             alt="coins and currency"
-                            className="h-[600px] w-[600px] rounded-full object-cover shadow-lg"
+                            className="md-mb-0 mb-3 h-96 w-96 rounded-full object-cover shadow-lg md:h-[600px] md:w-[600px]"
                         />
                     </div>
 
                     <div>
                         <div className="flex h-full w-full flex-row items-center justify-center px-6 text-center">
-                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#46acb8] opacity-0 drop-shadow-lg delay-[200ms]">
+                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#77ebfc] opacity-0 drop-shadow-lg delay-[200ms]">
                                 What is Peer Banking?
                             </h2>
                         </div>
@@ -116,21 +110,21 @@ export default function Welcome() {
                 </section>
 
                 {/* How it works */}
-                <div className="flex items-center justify-center">
-                    <h1 className="animate-[slideUpFade_0.6s_ease-out_forwards] text-7xl font-extrabold text-[#46acb8] underline opacity-0 drop-shadow-lg delay-100">
+                <div className="mt-3 flex items-center justify-center md:mt-0">
+                    <h1 className="animate-[slideUpFade_0.6s_ease-out_forwards] text-5xl font-extrabold text-[#77ebfc] underline opacity-0 drop-shadow-lg delay-100 md:text-7xl">
                         How it works
                     </h1>
                 </div>
 
                 {/* CYCLE */}
                 <section
-                    className="mx-5 mt-10 flex items-center justify-center"
+                    className="mx-5 mt-10 flex flex-col items-center justify-center md:flex-row"
                     id="cycle"
                 >
                     {/* TEXT */}
                     <div>
                         <div className="flex h-full w-full flex-row items-center justify-center px-6 text-center">
-                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#46acb8] opacity-0 drop-shadow-lg delay-[200ms]">
+                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#77ebfc] opacity-0 drop-shadow-lg delay-[200ms]">
                                 Cycle
                             </h2>
                         </div>
@@ -142,32 +136,32 @@ export default function Welcome() {
                         </p>
                     </div>
                     {/* IMAGE */}
-                    <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
+                    <div className="mt-3 flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms] md:mt-0">
                         <img
-                            src="/images/cycle2.png"
+                            src="/images/cycle.svg"
                             alt="coins and currency"
-                            className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
+                            className="h-96 w-96 rounded-full object-cover shadow-lg md:h-[500px] md:w-[500px]"
                         />
                     </div>
                 </section>
 
                 {/* Contribution */}
                 <section
-                    className="mx-5 mt-10 flex items-center justify-center"
+                    className="mx-5 mt-10 flex flex-col items-center justify-center md:flex-row"
                     id="contribution"
                 >
                     {/* IMAGE */}
-                    <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
+                    <div className="mb-3 flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms] md:mb-0">
                         <img
                             src="/images/send.svg"
                             alt="coins and currency"
-                            className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
+                            className="h-96 w-96 rounded-full object-cover shadow-lg md:h-[500px] md:w-[500px]"
                         />
                     </div>
                     {/* TEXT */}
                     <div>
                         <div className="flex h-full w-full flex-row items-center justify-center px-6 text-center">
-                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#46acb8] opacity-0 drop-shadow-lg delay-[200ms]">
+                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#77ebfc] opacity-0 drop-shadow-lg delay-[200ms]">
                                 Contributions
                             </h2>
                         </div>
@@ -182,13 +176,13 @@ export default function Welcome() {
                 </section>
                 {/* LOAN */}
                 <section
-                    className="mx-5 mt-10 flex items-center justify-center"
+                    className="mx-5 mt-10 flex flex-col items-center justify-center md:flex-row"
                     id="loan"
                 >
                     {/* TEXT */}
                     <div>
                         <div className="flex h-full w-full flex-row items-center justify-center px-6 text-center">
-                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#46acb8] opacity-0 drop-shadow-lg delay-[200ms]">
+                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#77ebfc] opacity-0 drop-shadow-lg delay-[200ms]">
                                 Loans
                             </h2>
                         </div>
@@ -202,17 +196,17 @@ export default function Welcome() {
                         </p>
                     </div>
                     {/* IMAGE */}
-                    <div className="flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms]">
+                    <div className="mt-3 flex h-full w-full animate-[slideUpFade_0.6s_ease-out_forwards] items-center justify-center overflow-hidden delay-[0ms] md:mt-0">
                         <img
                             src="/images/loan.svg"
                             alt="coins and currency"
-                            className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
+                            className="h-96 w-96 rounded-full object-cover shadow-lg md:h-[500px] md:w-[500px]"
                         />
                     </div>
                 </section>
                 {/* PAYOUT */}
                 <section
-                    className="mx-5 mt-10 flex items-center justify-center"
+                    className="mx-5 mt-10 flex flex-col items-center justify-center md:flex-row"
                     id="payout"
                 >
                     {/* IMAGE */}
@@ -220,18 +214,18 @@ export default function Welcome() {
                         <img
                             src="/images/chill.svg"
                             alt="coins and currency"
-                            className="h-[500px] w-[500px] rounded-full object-cover shadow-lg"
+                            className="h-96 w-96 rounded-full object-cover shadow-lg md:h-[500px] md:w-[500px]"
                         />
                     </div>
                     {/* TEXT */}
                     <div>
-                        <div className="flex h-full w-full flex-row items-center justify-center px-6 text-center">
-                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#46acb8] opacity-0 drop-shadow-lg delay-[200ms]">
+                        <div className="flex flex-row items-center justify-center text-center md:h-full md:w-full md:px-6">
+                            <h2 className="animate-[slideUpFade_0.9s_ease-out_forwards] text-5xl font-bold text-[#77ebfc] opacity-0 drop-shadow-lg delay-[200ms]">
                                 Payout
                             </h2>
                         </div>
 
-                        <div className="mt-6 flex animate-[slideUpFade_0.9s_ease-out_forwards] flex-col gap-2 opacity-0 delay-[400ms]">
+                        <div className="mt-6 flex w-96 animate-[slideUpFade_0.9s_ease-out_forwards] flex-col gap-2 opacity-0 delay-[400ms] md:w-full">
                             {/* Quick example card */}
                             <div className="p-4">
                                 <h3 className="mb-2 text-lg font-semibold">
@@ -280,18 +274,19 @@ export default function Welcome() {
                         size.
                     </p>
 
-                    <div className="mt-12 grid gap-8 md:grid-cols-4">
+                    <div className="group mt-12 grid gap-8 md:grid-cols-4">
                         {/* FREE */}
-                        <div className="rounded-xl border bg-white p-6 text-center shadow-sm hover:border-2 hover:border-[#77ebfc] dark:border-gray-700 dark:bg-gray-900">
+                        <div className="rounded-xl border border-gray-300 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 Free
                             </h3>
                             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                For small friend groups starting out.
+                                Up to 5 members. Perfect for small friend
+                                groups.
                             </p>
 
                             <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-                                €0
+                                €0{' '}
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
@@ -303,110 +298,110 @@ export default function Welcome() {
                                 <li>✔ Basic interest tracking</li>
                             </ul>
 
-                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg">
+                            <button
+                                onClick={() => router.get(register())}
+                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg"
+                            >
                                 Get Started
                             </button>
                         </div>
 
                         {/* BASIC */}
-                        <div className="rounded-xl border-2 bg-white p-6 text-center shadow-md hover:border-2 hover:border-[#77ebfc] dark:border-[#77ebfc] dark:bg-gray-900">
+                        <div className="rounded-xl border border-gray-300 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 Basic
                             </h3>
                             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                Perfect for active peer groups.
+                                €1.00 per user / month — minimum €10 per group.
                             </p>
 
-                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-                                €15
+                            <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+                                From €10
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
                             </div>
 
                             <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                                <li>✔ Up to 50 members</li>
-                                <li>✔ Unlimited circles</li>
-                                <li>✔ Smart loan reminders</li>
-                                <li>✔ Custom cycle durations</li>
-                            </ul>
-
-                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl">
-                                Choose Standard
-                            </button>
-                        </div>
-
-                        {/* STANDARD */}
-                        <div className="rounded-xl border-2 border-[#77ebfc] bg-white p-6 text-center shadow-md hover:border-2 hover:border-[#77ebfc] dark:border-[#77ebfc] dark:bg-gray-900">
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                Standard
-                            </h3>
-                            <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                Perfect for active peer groups.
-                            </p>
-
-                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-                                €35
-                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    /mo
-                                </span>
-                            </div>
-
-                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                                <li>✔ Up to 100 members</li>
+                                <li>✔ 50 member seats</li>
                                 <li>✔ Unlimited circles</li>
                                 <li>✔ Smart loan reminders</li>
                                 <li>✔ Custom cycle durations</li>
                                 <li>✔ Dashboard export</li>
                             </ul>
 
-                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl">
-                                Choose Standard
+                            <button
+                                onClick={() => router.get(register())}
+                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl"
+                            >
+                                Choose Basic
                             </button>
                         </div>
 
-                        {/* PREMIUM */}
-                        <div className="rounded-xl border bg-white p-6 text-center shadow-sm hover:border-2 hover:border-[#77ebfc] dark:border-gray-700 dark:bg-gray-900">
+                        {/* STANDARD */}
+                        <div className="rounded-xl border border-[#77ebfc] bg-white p-6 text-center shadow-sm transition-all group-hover:border-gray-300 hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                Premium
+                                Standard
                             </h3>
                             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                For large communities & savings clubs.
+                                €0.75 per user / month — minimum €15 per group.
                             </p>
 
-                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-                                €65
+                            <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+                                From €15
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
                             </div>
 
                             <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                                <li>✔ Unlimited members</li>
-                                <li>✔ Priority support</li>
-                                <li>✔ Advanced analytics</li>
-                                <li>✔ Scheduled loan rules</li>
-                                <li>✔ Full export & audit history</li>
+                                <li>✔ Everything from Basic</li>
+                                <li>✔ 100 members seats</li>
+                                <li>✔ Unlock all key features</li>
                             </ul>
 
-                            <button className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg">
+                            <button
+                                onClick={() => router.get(register())}
+                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl"
+                            >
+                                Choose Standard
+                            </button>
+                        </div>
+
+                        {/* PREMIUM */}
+                        <div className="rounded-xl border border-gray-300 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                Premium
+                            </h3>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400">
+                                €0.55 per user / month — minimum €30 per group.
+                            </p>
+
+                            <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+                                From €30
+                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    /mo
+                                </span>
+                            </div>
+
+                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <li>✔ Everything from Basic</li>
+                                <li>✔ Unlimited member seats</li>
+                                <li>✔ Priority support</li>
+                            </ul>
+
+                            <button
+                                onClick={() => router.get(register())}
+                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg"
+                            >
                                 Go Premium
                             </button>
                         </div>
                     </div>
                 </section>
 
-                <div className="my-20 flex items-center justify-center">
-                    <button
-                        type="button"
-                        className="rounded-lg bg-[#77ebfc] px-6 py-3.5 text-base font-medium text-white transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.03] hover:shadow-2xl"
-                    >
-                        Get started
-                    </button>
-                </div>
-
                 {/* FOOTER */}
-                <footer className="mt-20 w-full rounded-2xl bg-[#77ebfc] py-10 text-white">
+                <footer className="mt-20 w-full rounded-2xl bg-[#77ebfc] py-10 text-muted-foreground dark:text-black">
                     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 md:grid-cols-3">
                         {/* Address */}
                         <div>
