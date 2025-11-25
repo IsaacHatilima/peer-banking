@@ -1,4 +1,11 @@
-# Laravel, Inertia, React, ShadCN, Tailwind Starter Kit
+# Peer Banking SaaS
+
+# ⚠️ Important Notice
+
+[Tenancy for Laravel v4](https://v4.tenancyforlaravel.com/introduction/) is currently unreleased and still under active
+development.
+Features, APIs, and installation steps may change without warning.
+This implementation is intended for demonstration and testing only, not production use.
 
 ## What changed?
 
@@ -34,6 +41,8 @@ template also includes the introduction of Repositories and DTOs.
 - [Laravel Fortify](https://laravel.com/docs/12.x/fortify#main-content)
 - [Laravel Horizon](https://laravel.com/docs/12.x/horizon#running-horizon)
 - [Laravel Socialite](https://laravel.com/docs/12.x/socialite)
+- [Laravel Cashier (Stripe)](https://laravel.com/docs/12.x/billing)
+- [Tenancy for Laravel v4](https://v4.tenancyforlaravel.com/introduction/)
 
 ## Getting Started
 
