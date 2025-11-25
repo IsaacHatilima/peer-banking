@@ -7,7 +7,7 @@ import {
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    navigationMenuTriggerStyle,
+    navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { home, register } from '@/routes';
@@ -263,7 +263,6 @@ export default function Welcome() {
                         </div>
                     </div>
                 </section>
-
                 {/* GET STARTED */}
                 <section className="mx-auto mt-20 max-w-6xl px-6">
                     <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white">
@@ -274,49 +273,18 @@ export default function Welcome() {
                         size.
                     </p>
 
-                    <div className="group mt-12 grid gap-8 md:grid-cols-4">
-                        {/* FREE */}
-                        <div className="rounded-xl border border-gray-300 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                                Free
-                            </h3>
-                            <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                Up to 5 members. Perfect for small friend
-                                groups.
-                            </p>
-
-                            <div className="my-6 text-4xl font-extrabold text-gray-900 dark:text-white">
-                                €0{' '}
-                                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    /mo
-                                </span>
-                            </div>
-
-                            <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                                <li>✔ Up to 5 members</li>
-                                <li>✔ 1 active circle</li>
-                                <li>✔ Basic interest tracking</li>
-                            </ul>
-
-                            <button
-                                onClick={() => router.get(register())}
-                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg"
-                            >
-                                Get Started
-                            </button>
-                        </div>
-
+                    <div className="group mt-12 grid gap-8 md:grid-cols-3">
                         {/* BASIC */}
                         <div className="rounded-xl border border-gray-300 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:border-2 hover:border-[#77ebfc] hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 Basic
                             </h3>
                             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                €1.00 per user / month — minimum €10 per group.
+                                €1.00 per user / month..
                             </p>
 
                             <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-                                From €10
+                                From €50
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
@@ -329,13 +297,6 @@ export default function Welcome() {
                                 <li>✔ Custom cycle durations</li>
                                 <li>✔ Dashboard export</li>
                             </ul>
-
-                            <button
-                                onClick={() => router.get(register())}
-                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl"
-                            >
-                                Choose Basic
-                            </button>
                         </div>
 
                         {/* STANDARD */}
@@ -344,11 +305,11 @@ export default function Welcome() {
                                 Standard
                             </h3>
                             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                €0.75 per user / month — minimum €15 per group.
+                                €0.75 per user / month.
                             </p>
 
                             <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-                                From €15
+                                From €75
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
@@ -359,13 +320,6 @@ export default function Welcome() {
                                 <li>✔ 100 members seats</li>
                                 <li>✔ Unlock all key features</li>
                             </ul>
-
-                            <button
-                                onClick={() => router.get(register())}
-                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl"
-                            >
-                                Choose Standard
-                            </button>
                         </div>
 
                         {/* PREMIUM */}
@@ -373,12 +327,10 @@ export default function Welcome() {
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 Premium
                             </h3>
-                            <p className="mt-2 text-gray-500 dark:text-gray-400">
-                                €0.55 per user / month — minimum €30 per group.
-                            </p>
+                            <p className="mt-2 text-gray-500 dark:text-gray-400"></p>
 
                             <div className="my-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-                                From €30
+                                From €250
                                 <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                                     /mo
                                 </span>
@@ -389,15 +341,14 @@ export default function Welcome() {
                                 <li>✔ Unlimited member seats</li>
                                 <li>✔ Priority support</li>
                             </ul>
-
-                            <button
-                                onClick={() => router.get(register())}
-                                className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 hover:shadow-lg"
-                            >
-                                Go Premium
-                            </button>
                         </div>
                     </div>
+                    <button
+                        onClick={() => router.get(register())}
+                        className="mt-6 w-full rounded-lg bg-[#77ebfc] px-4 py-2 font-medium text-gray-900 transition-all hover:-translate-y-1 hover:shadow-xl"
+                    >
+                        Get Started
+                    </button>
                 </section>
 
                 {/* FOOTER */}

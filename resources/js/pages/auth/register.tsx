@@ -1,13 +1,13 @@
-import { login } from '@/routes';
-
 import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import InputWithError from '@/components/input-with-error';
 import PasswordInputWithError from '@/components/password-input-with-error';
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from '@/components/ui/input-group';
+import { Label } from '@/components/ui/label';
+import React from 'react';
 
 export default function Register() {
     return (
@@ -27,12 +27,45 @@ export default function Register() {
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <InputWithError
-                                    label="First Name"
-                                    name="first_name"
+                                    label="Group Name"
+                                    name="group_name"
                                     type="text"
                                     required
                                     autoFocus
                                     tabIndex={1}
+                                    autoComplete="group_name"
+                                    placeholder="Group Alpha"
+                                />
+                            </div>
+                            <div>
+                                <Label htmlFor="group_domain">Domain</Label>
+                                <InputGroup>
+                                    <InputGroupAddon>
+                                        <InputGroupText>
+                                            https://
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <InputGroupInput
+                                        tabIndex={2}
+                                        placeholder="groupalpha"
+                                        className="!pl-0.5"
+                                        required
+                                        name="group_domain"
+                                    />
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupText>
+                                            .peer-banking.com
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </div>
+                            <div className="grid gap-2">
+                                <InputWithError
+                                    label="First Name"
+                                    name="first_name"
+                                    type="text"
+                                    required
+                                    tabIndex={3}
                                     autoComplete="first_name"
                                     placeholder="John"
                                 />
@@ -44,7 +77,7 @@ export default function Register() {
                                     name="last_name"
                                     type="test"
                                     required
-                                    tabIndex={2}
+                                    tabIndex={4}
                                     autoComplete="last_name"
                                     placeholder="Doe"
                                 />
@@ -56,7 +89,7 @@ export default function Register() {
                                     name="email"
                                     type="email"
                                     required
-                                    tabIndex={3}
+                                    tabIndex={5}
                                     autoComplete="email"
                                     placeholder="email@example.com"
                                 />
@@ -68,7 +101,7 @@ export default function Register() {
                                     name="password"
                                     forgotPassword={false}
                                     required
-                                    tabIndex={4}
+                                    tabIndex={6}
                                     autoComplete="password"
                                 />
                             </div>
@@ -79,7 +112,7 @@ export default function Register() {
                                     name="password_confirmation"
                                     forgotPassword={false}
                                     required
-                                    tabIndex={5}
+                                    tabIndex={7}
                                     autoComplete="password_confirmation"
                                 />
                             </div>
@@ -87,19 +120,12 @@ export default function Register() {
                             <Button
                                 type="submit"
                                 className="mt-2 w-full"
-                                tabIndex={5}
+                                tabIndex={8}
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
                                 Create account
                             </Button>
-                        </div>
-
-                        <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
-                                Log in
-                            </TextLink>
                         </div>
                     </>
                 )}
