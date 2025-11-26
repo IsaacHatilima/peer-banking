@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\User;
 
 abstract class Controller
@@ -15,5 +16,17 @@ abstract class Controller
         }
 
         return $user;
+    }
+
+    public function currentTenant(): Tenant
+    {
+        /** @var Tenant $tenant */
+        $tenant = tenant();
+
+        if ($tenant == null) {
+            abort(401, 'Tenant not found.');
+        }
+
+        return $tenant;
     }
 }

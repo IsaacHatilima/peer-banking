@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Stancl\Tenancy\Tenancy;
 
 return new class () extends Migration {
     /**
@@ -15,10 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid(Tenancy::tenantKeyColumn())->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('tenant_id')->constrained('tenants')->cascadeOnDelete();
             $table->string('domain', 255)->unique();
-            // $table->string(Tenancy::tenantKeyColumn())->comment('no-rls');
-
             $table->timestamps();
         });
     }

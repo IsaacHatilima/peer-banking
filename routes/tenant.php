@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 use Stancl\Tenancy\Middleware;
 
 /*
@@ -23,7 +24,5 @@ Route::middleware([
     Middleware\PreventAccessFromUnwantedDomains::class,
     Middleware\ScopeSessions::class,
 ])->group(function () {
-    Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id') . "\n";
-    });
+    Route::get('/home', fn () => Inertia::render('dashboard'))->name('tenant.dashboard');
 });

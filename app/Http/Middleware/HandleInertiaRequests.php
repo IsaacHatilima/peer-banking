@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Dtos\UserDto;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -40,9 +41,13 @@ class HandleInertiaRequests extends Middleware
         /** @var ?User $user */
         $user = $request->user();
 
+        /** @var ?Tenant $tenant */
+        $tenant = tenant();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
+            'tenant' => $tenant->tenant_name ?? '',
             'auth' => [
                 'user' => $user ? UserDto::fromModel($user)->toArray() : [],
             ],

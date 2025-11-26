@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -9,6 +10,24 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
+/**
+ * App\Models\User
+ *
+ * @property string $id
+ * @property string $tenant_number
+ * @property string $tenant_name
+ * @property string $contact_first_name
+ * @property string $contact_last_name
+ * @property string $contact_email
+ * @property string $contact_phone
+ *
+ * @property bool $is_active
+ *
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ *
+ * @property-read Domain $domain
+ */
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase;
@@ -24,7 +43,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
      */
     public static function getCustomColumns(): array
     {
-        return array_merge(parent::getCustomColumns(), [
+        return [
+            'id',
             'tenant_number',
             'tenant_name',
             'contact_first_name',
@@ -32,7 +52,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'contact_email',
             'contact_phone',
             'is_active',
-        ]);
+            'tenancy_db_name',
+        ];
     }
 
     /**

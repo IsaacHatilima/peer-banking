@@ -30,7 +30,7 @@ class RegisterAction implements CreatesNewUsers
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param  array<string, mixed>  $input
      *
      * @throws Throwable
      */

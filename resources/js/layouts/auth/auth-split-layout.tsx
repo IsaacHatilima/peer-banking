@@ -15,7 +15,7 @@ export default function AuthSplitLayout({
     title,
     description,
 }: PropsWithChildren<AuthLayoutProps>) {
-    const { name, quote } = usePage<SharedData>().props;
+    const { tenant } = usePage<SharedData>().props;
 
     return (
         <div className="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -25,21 +25,11 @@ export default function AuthSplitLayout({
                     href={home()}
                     className="relative z-20 flex items-center text-lg font-medium"
                 >
-                    <AppLogoIcon className="mr-2 size-8 fill-current text-white" />
-                    {name}
-                </Link>
-                {quote && (
-                    <div className="relative z-20 mt-auto">
-                        <blockquote className="space-y-2">
-                            <p className="text-lg">
-                                &ldquo;{quote.message}&rdquo;
-                            </p>
-                            <footer className="text-sm text-neutral-300">
-                                {quote.author}
-                            </footer>
-                        </blockquote>
+                    <div className="text-2xl text-[#428786]">{tenant}</div>
+                    <div className="mb-1 flex h-24 w-24 items-center justify-center rounded-md">
+                        <AppLogoIcon />
                     </div>
-                )}
+                </Link>
             </div>
             <div className="w-full lg:p-8">
                 <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -47,7 +37,10 @@ export default function AuthSplitLayout({
                         href={home()}
                         className="relative z-20 flex items-center justify-center lg:hidden"
                     >
-                        <AppLogoIcon className="h-10 fill-current text-black sm:h-12" />
+                        <div className="text-2xl text-[#428786]">{tenant}</div>
+                        <div className="mb-1 flex h-24 w-24 items-center justify-center rounded-md">
+                            <AppLogoIcon />
+                        </div>
                     </Link>
                     <div className="flex flex-col items-start gap-2 text-left sm:items-center sm:text-center">
                         <Alert />

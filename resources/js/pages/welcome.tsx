@@ -10,11 +10,13 @@ import {
     navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { home, register } from '@/routes';
-import { Link, router } from '@inertiajs/react';
+import { home, login, register } from '@/routes';
+import { Link, router, usePage } from '@inertiajs/react';
+import type { SharedData } from '@/types';
 
 export default function Welcome() {
     const isMobile = useIsMobile();
+    const { tenant } = usePage<SharedData>().props;
     return (
         <div>
             <Card className="flex h-24 w-full flex-row items-center justify-between">
@@ -44,6 +46,18 @@ export default function Welcome() {
                                     </Link>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
+                            {tenant ? (
+                                <NavigationMenuItem>
+                                    <NavigationMenuLink
+                                        asChild
+                                        className={navigationMenuTriggerStyle()}
+                                    >
+                                        <Link href={login()}>Login</Link>
+                                    </NavigationMenuLink>
+                                </NavigationMenuItem>
+                            ) : (
+                                <></>
+                            )}
                         </NavigationMenuList>
                     </NavigationMenu>
                     <div className="mr-5">

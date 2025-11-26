@@ -30,6 +30,7 @@ return [
     'models' => [
         'tenant' => App\Models\Tenant::class,
         'domain' => App\Models\Domain::class,
+        // 'domain' => Stancl\Tenancy\Database\Models\Domain::class,
         'impersonation_token' => Stancl\Tenancy\Database\Models\ImpersonationToken::class,
 
         /**
@@ -189,7 +190,7 @@ return [
         // Bootstrappers\BroadcastChannelPrefixBootstrapper::class,
 
         // Integration bootstrappers
-        // Bootstrappers\Integrations\FortifyRouteBootstrapper::class,
+        Bootstrappers\Integrations\FortifyRouteBootstrapper::class,
         // Bootstrappers\Integrations\ScoutPrefixBootstrapper::class,
 
         // Bootstrappers\PostgresRLSBootstrapper::class,
