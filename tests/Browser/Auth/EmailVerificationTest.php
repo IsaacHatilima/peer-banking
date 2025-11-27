@@ -3,7 +3,9 @@
 test('can show email verification page', function () {
     $page = visit(route('register'));
 
-    $page->fill('first_name', 'John')
+    $page->fill('group_name', 'Group Name')
+        ->fill('group_domain', 'group-alpha')
+        ->fill('first_name', 'John')
         ->fill('last_name', 'Doe')
         ->fill('email', 'johndoe@mail.com')
         ->fill('password', 'Password1#')
@@ -18,7 +20,9 @@ test('can show email verification page', function () {
 test('can resend verification link', function () {
     $page = visit(route('register'));
 
-    $page->fill('first_name', 'John')
+    $page->fill('group_name', 'Group Name')
+        ->fill('group_domain', 'group-alpha')
+        ->fill('first_name', 'John')
         ->fill('last_name', 'Doe')
         ->fill('email', 'johndoe@mail.com')
         ->fill('password', 'Password1#')

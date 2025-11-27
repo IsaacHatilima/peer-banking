@@ -2,8 +2,8 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\RateLimiter;
-use Laravel\Fortify\Features;
 use Inertia\Testing\AssertableInertia as Assert;
+use Laravel\Fortify\Features;
 
 test('login screen can be rendered', function () {
     $this->get(route('login'))
@@ -18,7 +18,7 @@ test('users can authenticate using the login screen', function () {
 
     $response = $this->post(route('login.store'), [
         'email' => $user->email,
-        'password' => 'password',
+        'password' => 'Password1#',
     ]);
 
     $this->assertAuthenticated();
@@ -45,7 +45,7 @@ test('users with two factor enabled are redirected to two factor challenge', fun
 
     $response = $this->post(route('login'), [
         'email' => $user->email,
-        'password' => 'password',
+        'password' => 'Password1#',
     ]);
 
     $response->assertRedirect(route('two-factor.login'));

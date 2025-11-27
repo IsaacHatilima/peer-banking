@@ -51,6 +51,22 @@ export default function Register() {
                                         className="!pl-0.5"
                                         required
                                         name="group_domain"
+                                        pattern="[A-Za-z-]+"
+                                        onKeyDown={(e) => {
+                                            if (
+                                                !/^[A-Za-z-]$/.test(e.key) &&
+                                                e.key !== 'Backspace'
+                                            ) {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                        onChange={(e) => {
+                                            e.target.value =
+                                                e.target.value.replace(
+                                                    /[^A-Za-z-]/g,
+                                                    '',
+                                                );
+                                        }}
                                     />
                                     <InputGroupAddon align="inline-end">
                                         <InputGroupText>

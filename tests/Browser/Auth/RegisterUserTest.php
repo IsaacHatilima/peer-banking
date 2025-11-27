@@ -11,7 +11,9 @@ test('can show register page', function () {
 test('user can register', function () {
     $page = visit(route('register'));
 
-    $page->fill('first_name', 'John')
+    $page->fill('group_name', 'Group Name')
+        ->fill('group_domain', 'group-alpha')
+        ->fill('first_name', 'John')
         ->fill('last_name', 'Doe')
         ->fill('email', 'johndoe@mail.com')
         ->fill('password', 'Password1#')

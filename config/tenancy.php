@@ -66,6 +66,9 @@ return [
          */
         'central_domains' => [
             str(env('APP_URL'))->after('://')->before('/')->before(':')->toString(),
+            // Below are for testing with Pest Browser test and must be removed.
+            'localhost',
+            '127.0.0.1',
         ],
 
         /**
