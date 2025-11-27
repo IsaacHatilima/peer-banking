@@ -1,12 +1,10 @@
 import InputWithError from '@/components/input-with-error';
 import PasswordInputWithError from '@/components/password-input-with-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
-import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { redirect } from '@/routes/google';
 import { request } from '@/routes/password';
@@ -17,14 +15,9 @@ import { FaGoogle } from 'react-icons/fa';
 interface LoginProps {
     status?: string;
     canResetPassword: boolean;
-    canRegister: boolean;
 }
 
-export default function Login({
-    status,
-    canResetPassword,
-    canRegister,
-}: LoginProps) {
+export default function Login({ status, canResetPassword }: LoginProps) {
     return (
         <AuthLayout
             title="Log in to your account"
@@ -99,15 +92,6 @@ export default function Login({
                                 Login with Google
                             </Button>
                         </div>
-
-                        {canRegister && (
-                            <div className="text-center text-sm text-muted-foreground">
-                                Don't have an account?{' '}
-                                <TextLink href={register()} tabIndex={5}>
-                                    Sign up
-                                </TextLink>
-                            </div>
-                        )}
                     </>
                 )}
             </Form>

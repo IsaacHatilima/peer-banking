@@ -31,7 +31,7 @@ class TenantFactory extends Factory
         return $this->afterCreating(function (Tenant $tenant) {
             $tenant->run(function ($tenant) {
                 /** @var Tenant $tenant */
-                $tenant->domain()->create(['domain' => $this->faker->unique()->slug().'.peer-banking.test']);
+                $tenant->domain()->create(['domain' => $this->faker->unique()->word().'.peer-banking.test']);
 
                 User::factory(3)->admin()->create();
 
