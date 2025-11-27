@@ -20,10 +20,6 @@ class UserRepository
         return User::query()->create($data);
     }
 
-    /**
-     * @param  User  $user
-     * @param  string  $email
-     */
     public function updateEmail(User $user, string $email): void
     {
         $normalized = strtolower($email);

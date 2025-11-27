@@ -14,6 +14,7 @@ class ConnectedAccountFactory extends Factory
     public function definition(): array
     {
         $user = User::factory();
+
         return [
             'identifier' => $user->email,
             'service' => $this->faker->randomElement(['google', 'github', 'apple']),

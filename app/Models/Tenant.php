@@ -22,18 +22,21 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  * @property string $contact_last_name
  * @property string $contact_email
  * @property string $contact_phone
+ *
  * @property bool $is_active
+ *
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ *
  * @property-read Domain $domain
  */
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
+    use HasDatabase;
+
+    use HasDomains;
     /** @use HasFactory<TenantFactory> */
     use HasFactory;
-
-    use HasDatabase;
-    use HasDomains;
     use HasUuids;
 
     protected $attributes = [

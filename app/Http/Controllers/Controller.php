@@ -20,10 +20,10 @@ abstract class Controller
 
     public function currentTenant(): Tenant
     {
-        /** @var Tenant $tenant */
+        /** @var ?Tenant $tenant */
         $tenant = tenant();
 
-        if ($tenant == null) {
+        if (! $tenant) {
             abort(401, 'Tenant not found.');
         }
 

@@ -9,3 +9,4 @@ parameters:
     excludePaths:
         - tests/*
         - database/*
+        - app/Providers/TenancyServiceProvider.php

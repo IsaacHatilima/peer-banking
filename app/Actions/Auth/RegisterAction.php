@@ -36,7 +36,7 @@ class RegisterAction implements CreatesNewUsers
      */
     public function create(array $input): User
     {
-        $rules = (new RegisterRequest())->rules();
+        $rules = new RegisterRequest()->rules();
         $validated = Validator::make($input, $rules)->validate();
 
         $request = new RegisterRequest();
