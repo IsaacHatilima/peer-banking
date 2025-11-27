@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/navigation-menu';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { home, login, register } from '@/routes';
-import { Link, router, usePage } from '@inertiajs/react';
 import type { SharedData } from '@/types';
+import { Link, router, usePage } from '@inertiajs/react';
 
 export default function Welcome() {
     const isMobile = useIsMobile();

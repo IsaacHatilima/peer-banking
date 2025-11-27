@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -17,12 +18,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::query()->firstOrCreate(
-            ['email' => 'test@example.com'],
+            ['email' => 'test@mail.com'],
             [
-                'name' => 'Test User',
                 'password' => 'Password1#',
                 'email_verified_at' => now(),
             ]
         );
+
+        Tenant::factory()->create();
     }
 }

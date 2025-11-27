@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\TenantFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -20,16 +22,16 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  * @property string $contact_last_name
  * @property string $contact_email
  * @property string $contact_phone
- *
  * @property bool $is_active
- *
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property-read Domain $domain
  */
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
+    /** @use HasFactory<TenantFactory> */
+    use HasFactory;
+
     use HasDatabase;
     use HasDomains;
     use HasUuids;

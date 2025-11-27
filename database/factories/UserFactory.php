@@ -58,6 +58,20 @@ class UserFactory extends Factory
         ]);
     }
 
+    public function admin(): static
+    {
+        return $this->state(fn () => [
+            'role' => 'admin',
+        ]);
+    }
+
+    public function member(): static
+    {
+        return $this->state(fn () => [
+            'role' => 'member',
+        ]);
+    }
+
     public function configure(): Factory|UserFactory
     {
         return $this->afterCreating(function (User $user) {

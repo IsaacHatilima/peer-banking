@@ -21,6 +21,8 @@ Route::middleware([
             'canRegister' => Features::enabled(Features::registration()),
         ]);
     })->name('home');
+
+    require __DIR__.'/settings.php';
 });
 
 Route::get('/google/redirect', [GoogleAuthController::class, 'redirectToGoogle'])
@@ -28,5 +30,3 @@ Route::get('/google/redirect', [GoogleAuthController::class, 'redirectToGoogle']
 
 Route::get('/auth/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
     ->name('google.callback');
-
-require __DIR__.'/settings.php';
