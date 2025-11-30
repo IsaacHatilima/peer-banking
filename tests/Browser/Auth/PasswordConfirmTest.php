@@ -1,6 +1,7 @@
 <?php
 
 test('password confirm page', function () {
+    disableRateLimiter();
     login();
 
     visit(route('password.confirm'))

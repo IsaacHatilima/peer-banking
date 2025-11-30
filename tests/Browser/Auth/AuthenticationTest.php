@@ -1,6 +1,7 @@
 <?php
 
 test('show login page', function () {
+    disableRateLimiter();
     $page = visit(route('login'));
 
     $page->assertSee('Log in to your account');
@@ -9,6 +10,7 @@ test('show login page', function () {
 });
 
 test('user can sign in', function () {
+    disableRateLimiter();
     createUser();
 
     $page = visit(route('login'));

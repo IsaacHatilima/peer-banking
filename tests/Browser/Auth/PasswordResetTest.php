@@ -3,6 +3,7 @@
 
 
 test('password reset can be requested', function () {
+    disableRateLimiter();
     $user = createUser();
 
     visit(route('password.request'))

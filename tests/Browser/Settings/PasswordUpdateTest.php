@@ -1,6 +1,7 @@
 <?php
 
 test('password can be updated', function () {
+    disableRateLimiter();
     login();
 
     visit(route('user-password.update'))

@@ -1,6 +1,7 @@
 <?php
 
 test('can show email verification page', function () {
+    disableRateLimiter();
     $page = visit(route('register'));
 
     $page->fill('group_name', 'Group Name')
@@ -18,6 +19,7 @@ test('can show email verification page', function () {
 });
 
 test('can resend verification link', function () {
+    disableRateLimiter();
     $page = visit(route('register'));
 
     $page->fill('group_name', 'Group Name')

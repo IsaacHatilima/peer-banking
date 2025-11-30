@@ -13,12 +13,13 @@
 
 use App\Models\Tenant;
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
 
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\DatabaseMigrations::class)
     ->in('Feature', 'Browser', 'Unit');
 
-pest()->browser()->timeout(600000);
+pest()->browser()->timeout(30000);
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,8 @@ function createUser()
 {
     return User::factory()->create([
         'email' => 'test@mail.com',
-        'password' => Hash::make('Password1#')
+        'password' => Hash::make('Password1#'),
+        'email_verified_at' => now(),
     ]);
 }
 
@@ -85,4 +87,18 @@ function getTenantUser(Tenant $tenant, string $role): User
 function tenantRoute(Tenant $tenant, string $route)
 {
     return 'https://' . $tenant->domain->domain . route($route, absolute: false);
+}
+
+function tenantUrl(string $routeName, string $tenantDomain, array $parameters = []): string
+{
+    $path = parse_url(route($routeName), PHP_URL_PATH);
+
+    return 'https://'.$tenantDomain.$path;
+}
+
+function disableRateLimiter()
+{
+    // Browser testing hits rate limit so we disabled it.
+    RateLimiter::clear('login');
+    RateLimiter::for('login', fn () => Limit::none());
 }

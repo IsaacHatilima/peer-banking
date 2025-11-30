@@ -1,6 +1,7 @@
 <?php
 
 test('can show register page', function () {
+    disableRateLimiter();
     $page = visit(route('register'));
 
     $page->assertSee('Create an account');
@@ -9,6 +10,7 @@ test('can show register page', function () {
 });
 
 test('user can register', function () {
+    disableRateLimiter();
     $page = visit(route('register'));
 
     $page->fill('group_name', 'Group Name')

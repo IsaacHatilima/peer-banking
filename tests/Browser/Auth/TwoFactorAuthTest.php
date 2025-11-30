@@ -4,6 +4,7 @@ use App\Models\User;
 use Laravel\Fortify\Features;
 
 test('user can authenticate with two factor auth', function () {
+    disableRateLimiter();
     if (! Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two-factor authentication is not enabled.');
     }
@@ -38,6 +39,7 @@ test('user can authenticate with two factor auth', function () {
 });
 
 test('user cannot authenticate with wrong two factor auth codes', function () {
+    disableRateLimiter();
     if (! Features::canManageTwoFactorAuthentication()) {
         $this->markTestSkipped('Two-factor authentication is not enabled.');
     }

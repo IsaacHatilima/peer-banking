@@ -1,6 +1,8 @@
 <?php
 
 test('profile can be updates', function () {
+    // Test is randomly hitting rate limit so we bypass it.
+    disableRateLimiter();
     login();
 
     visit(route('profile.edit'))
