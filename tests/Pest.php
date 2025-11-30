@@ -11,10 +11,11 @@
 |
 */
 
+use App\Models\Tenant;
 use App\Models\User;
 
 pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\DatabaseMigrations::class)
     ->in('Feature', 'Browser', 'Unit');
 
 pest()->browser()->timeout(600000);
@@ -62,4 +63,26 @@ function login(): void
         ->fill('password', 'Password1#')
         ->press('Log in')
         ->assertUrlIs(route('dashboard'));
+}
+
+function createTenant()
+{
+    $tenant = Tenant::factory()->create();
+    tenancy()->initialize($tenant);
+    config()->set('app.url', $tenant->domain->domain);
+    return $tenant;
+}
+
+function getTenantUser(Tenant $tenant, string $role): User
+{
+    return $tenant->run(
+        fn () => User::with('profile')
+            ->where('role', $role)
+            ->first()
+    );
+}
+
+function tenantRoute(Tenant $tenant, string $route)
+{
+    return 'https://' . $tenant->domain->domain . route($route, absolute: false);
 }

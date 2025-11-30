@@ -72,6 +72,8 @@ return [
         'app/Http/Middleware',
         'app/Providers',
         'routes',
+        'tests',
+        'config',
     ],
 
     'add' => [
